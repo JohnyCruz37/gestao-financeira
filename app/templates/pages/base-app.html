@@ -1,0 +1,38 @@
+{% extends 'pages/base.html' %}
+
+<!-- titulo da aba -->
+{% block titulo %}
+Página Inicial
+{% endblock %}
+
+<!-- conteúdo da página -->
+{% block conteudo %} 
+<link rel="stylesheet" href="{{url_for('static', filename='css/base-app.css')}}">
+<div class="base-app-grid container-fluid h-100">
+    <div class="row full-height">
+        {% include "includes/aside.html" %}
+        
+        
+        <main class="col-10 app-main">
+            {% include "includes/header.html" %}
+
+            <section class="row main-section">
+                <article class="main-article col-12 p-3">
+                    {% block main %}
+            
+                    {% endblock %}
+                </article>
+            </section>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+
+
+<!-- script de componentes menores -->
+{% block scriptsBase %}
+    {{ super() }}
+    {% block scriptBaseApp %}
+    {% endblock %}
+{% endblock scriptsBase %}

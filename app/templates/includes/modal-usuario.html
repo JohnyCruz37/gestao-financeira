@@ -1,0 +1,59 @@
+<!-- Modal de Usuário -->
+<link rel="stylesheet" href="{{url_for('static', filename='css/modal.css')}}">
+<div class="modal fade" id="modalUsuario" tabindex="-1" aria-labelledby="modalUsuarioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalUsuarioLabel">Detalhes do Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form-usuario-edicao">
+                <div class="modal-body">
+                        <div class="row">                        
+                            <div class="mb-3 col-2">
+                                <label for="id" class="form-label">ID</label>
+                                <input type="text" class="form-control" id="id" name="id" disabled>
+                            </div>
+                            <div class="mb-3 col-5">
+                                <label for="nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="nome" name="nome" disabled>
+                            </div>
+                            <div class="mb-3 col-5">
+                                <label for="sobrenome" class="form-label">Sobrenome</label>
+                                <input type="text" class="form-control" id="sobrenome" name="sobrenome" disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" disabled>
+                            </div>
+                            <div class="mb-3 col-6">
+                                <label for="celular" class="form-label">Celular</label>
+                                <input type="text" class="form-control" id="celular" name="celular" disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-6">
+                                <label for="tipo-acesso" class="form-label">Tipo de Acesso</label>
+                                <input type="text" class="form-control" id="tipo-acesso" name="tipo_acesso" disabled>
+                            </div>
+                            <div class="mb-3 col-6">
+                                <label for="empresa" class="form-label">Empresa</label>
+                                <input type="text" class="form-control" id="empresa" name="empresa" disabled>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="area-btn-salvar">
+                        <button type="button" class="btn btn-success" id="btn-salvar-usuario">Salvar</button>
+                    </div>
+                    <div class="area-btns-editar-cancl">
+                        <button type="button" class="btn btn-info" id="btn-editar-usuario">Editar</button>
+                        <button type="button" id="btn-cancelar-usuario" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

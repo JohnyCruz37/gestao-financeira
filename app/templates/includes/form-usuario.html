@@ -1,0 +1,88 @@
+<form id="usuarioForm">
+    <fieldset class="border p-2 mb-2">
+        <legend class="w-auto text-muted small">Definição de acesso</legend>
+        <div class="form-floating mb-1">
+            <select class="form-select" id="tipoAcesso" name="tipoAcesso" required>
+                <option value="">Tipo de acesso</option>
+                <option value="admin">Administrativo</option>
+                <option value="financeiro">Financeiro</option>
+                <option value="gerente">Gerente</option>
+            </select>
+            <label for="tipoAcesso">Tipo de Acesso</label>
+        </div>
+
+        <div class="form-floating mb-1" >
+            <select class="form-select" id="select-empresa" name="select-empresa" required>
+                <option value="">Selecionar Empresa</option>
+            </select>
+            <label for="select-empresa">Selecinar Empresa</label>
+        </div>
+    </fieldset>
+
+    <fieldset class="border p-2 mb-2">  
+        <legend class="w-auto text-muted small">Dados do usuário</legend>
+
+        <div class="row">
+            <div class="col-5">
+                <div class="form-floating mb-1">
+                    <input placeholder="Nome" type="text" class="form-control" id="nome" name="nome" required>
+                    <label for="nome">Nome do usuário</label>
+                </div>
+                <div id="nomeFeedback" class="invalid-feedback"></div>
+            </div>
+            <div class="col-7">
+                <div class="form-floating mb-1">
+                    <input placeholder="Sobrenome" type="text" class="form-control" id="sobrenome" name="sobrenome" required>
+                    <label for="sobrenome">Sobrenome do usuário</label>
+                </div>
+                <div id="sobrenomeFeedback" class="invalid-feedback"></div>
+            </div>
+        </div>
+        <div id="codigoFeedback" class="invalid-feedback"></div>
+
+        <div class="form-floating mb-1">
+            <input placeholder="email@contato.com" type="email" class="form-control" id="email" name="email" required>
+            <label for="email">Email</label>
+        </div>
+        <div id="emailFeedback" class="invalid-feedback"></div>
+        
+        <div class="form-floating mb-1">
+            <input placeholder="(11)9.XXXX-XXXX" type="tel" class="form-control" id="celular" name="celular" required>
+            <label for="celular">Celular</label>
+        </div>
+        <div id="celularFeedback" class="invalid-feedback"></div>
+    </fieldset>
+
+    <fieldset class="border p-2 mb-2">
+        <legend class="w-auto text-muted small">
+            Senha 
+            <i class="bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-html="true"
+            title="<ul><li>8 caracteres ou mais</li><li>Letras maiúsculas</li><li>Letras minúsculas</li><li>Um número</li><li>Um caractere especial</li></ul>">
+            </i>
+        </legend>
+        <div class="input-group mb-3">
+            <div class="form-floating">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Senha" required>
+                <label for="password">******</label>
+            </div>
+            <div id="senhaFeedback" class="invalid-feedback"></div>
+            <button class="btn btn-outline-secondary" type="button" id="togglePassword-senha">
+                <i class="bi bi-eye-slash"></i>
+            </button>
+        </div>
+        <div class="input-group mb-3">
+            <div class="form-floating">
+                <input type="password" class="form-control" id="password-confirm" name="password-confirm" placeholder="Confirmar Senha" required>
+                <label for="password-confirm">******</label>
+            </div>
+            <div id="senhaConfirmFeedback" class="invalid-feedback"></div>
+            <button class="btn btn-outline-secondary" type="button" id="togglePassword-senha-confirm">
+                <i class="bi bi-eye-slash"></i>
+            </button>
+        </div>
+    </fieldset>
+
+    <button type="submit" class="btn btn-primary btn-lg mb-5">Cadastrar</button>
+</form>
+
+<script type="module" src="{{url_for('static', filename='js/validarFormUsuario.js')}}"></script>

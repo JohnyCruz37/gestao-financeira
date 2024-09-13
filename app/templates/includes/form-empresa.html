@@ -1,0 +1,24 @@
+<form id="empresaForm">
+    <fieldset class="border p-2 mb-2">  
+        <legend class="w-auto text-muted small">Dados da empresa</legend>
+
+        <div class="row">
+            <div class="col-5">
+                <div class="form-floating mb-1">
+                    <input placeholder="CNPJ" type="text" class="form-control" id="cnpj" name="cnpj" required>
+                    <label for="cnpj">CNPJ</label>
+                </div>
+                <div id="cnpjFeedback" class="invalid-feedback"></div>
+            </div>
+            <div class="col-7">
+                <div class="form-floating mb-1">
+                    <input placeholder="Razão Social" type="text" class="form-control" id="razao-social" name="razao-social" required>
+                    <label for="razao-social">Razão Social</label>
+                </div>
+                <div id="razaoSocialFeedback" class="invalid-feedback"></div>
+            </div>
+        </div>
+    </fieldset>
+    
+    <button type="submit" class="btn btn-primary btn-lg mb-5">Cadastrar</button>
+</form>

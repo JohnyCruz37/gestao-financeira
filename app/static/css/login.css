@@ -1,0 +1,26 @@
+.section-container{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bloco-form-login{
+    height: 80%;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.form-login{
+    width: 80%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}

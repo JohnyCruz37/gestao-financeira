@@ -1,0 +1,12 @@
+package-lock.json
+package.json
+passeger_local.py
+temporario.py
+tsconfig.json
+**/src
+**/node_modules
+**/migrations
+**/.venv
+__pycache__
+**/__pycache__/**
+

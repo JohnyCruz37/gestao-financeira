@@ -1,0 +1,31 @@
+<div class="modal fade" id="modalEmpresas" tabindex="-1" aria-labelledby="modalEmpresasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEmpresasLabel">Detalhes da Empresa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form-empresa">
+                    <div class="mb-3">
+                        <label for="empresa-id" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="empresa-id" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="empresa-razao-social" class="form-label">Razão Social</label>
+                        <input type="text" class="form-control" id="empresa-razao-social" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="empresa-cnpj" class="form-label">CNPJ</label>
+                        <input type="text" class="form-control" id="empresa-cnpj" disabled>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-editar-empresa" class="btn btn-info">Editar</button>
+                <button id="btn-salvar-empresa" class="btn btn-success d-none">Salvar</button>
+                <button id="btn-cancelar-empresa" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

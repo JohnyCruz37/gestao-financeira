@@ -1,0 +1,17 @@
+.modal-footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.area-btn-salvar{
+    flex: 1 1 0;
+}
+
+#btn-salvar-usuario{
+    display: none;
+}
+
+.area-btns-editar-cancl{
+    width: auto;
+    padding: 0 1rem;
+}

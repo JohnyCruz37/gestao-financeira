@@ -1,0 +1,39 @@
+{% extends 'pages/base.html' %}
+
+<!-- titulo da aba -->
+{% block titulo %}
+Login AMAM
+{% endblock %}
+
+<!-- conteúdo da página -->
+{% block conteudo %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}">
+<section class="section-container container">
+        <div class="col-md-6 bloco bloco-shadow bloco-form-login">
+            <h2>Login</h2>
+            <form class="form-login" id="form-login">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                    <label for="username">E-mail</label>
+                </div>
+                <div id="emailFeedback" class="invalid-feedback"></div>
+                <div class="input-group mb-3">
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Senha" required>
+                        <label for="password">Senha</label>
+                    </div>
+                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                        <i class="bi bi-eye-slash"></i>
+                    </button>
+                </div>
+                <div id="passwordFeedback" class="invalid-feedback"></div>
+ 
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+</section>
+{% endblock %}
+
+{% block scriptsBase %}
+    <script type="module" src="{{url_for('static', filename='js/login.js')}}"></script>
+{% endblock %}
