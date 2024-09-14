@@ -5,7 +5,7 @@ import populateTableEmpresasGerentes from "./populateTableEmpresasGerentes.js";
 document.addEventListener('DOMContentLoaded', () => {
     configurarFormEmpresa();
     configurarFormUsuario();
-    populateSelect();
+    populateSelect('select-empresa');
     populateTableEmpresasGerentes('table-empresas-e-gerentes');
     populateTableEmpresas('table-empresas');
 });

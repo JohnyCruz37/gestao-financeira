@@ -17,14 +17,15 @@ class User(db.Model, UserMixin):
         'polymorphic_on': tipo_acesso  
     }
 
-    def __init__(self, tipo_acesso, nome, sobrenome, celular, email, senha, id_empresa=None):
+    def __init__(self, tipo_acesso, **kwargs):
         self.tipo_acesso = tipo_acesso
-        self.id_empresa = id_empresa
-        self.nome = nome
-        self.sobrenome = sobrenome
-        self.celular = celular
-        self.email = email
-        self.secret_senha = senha
+
+        self.nome = kwargs.get('nome')
+        self.sobrenome = kwargs.get('sobrenome')
+        self.celular = kwargs.get('celular')
+        self.email = kwargs.get('email')
+        self.id_empresa = kwargs.get('id_empresa')
+        self.senha_hash = kwargs.get('senha', self.senha_hash) 
 
     @property
     def secret_senha(self):

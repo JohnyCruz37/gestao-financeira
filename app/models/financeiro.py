@@ -5,8 +5,9 @@ class Financeiro(User):
     __mapper_args__ = {
         'polymorphic_identity': 'financeiro'
     }
-    def __init__(self, nome, sobrenome, celular, email, senha):
-        super().__init__(nome, sobrenome, celular, email, senha, tipo_acesso='financeiro')
+    def __init__(self, **kwargs):
+        kwargs.pop('tipo_acesso', None) # validado fora do objeto
+        super().__init__(tipo_acesso='financeiro', **kwargs)
 
     def to_dict(self):
         return {

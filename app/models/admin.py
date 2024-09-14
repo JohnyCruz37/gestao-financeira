@@ -6,9 +6,9 @@ class Admin(User):
     __mapper_args__ = {
         'polymorphic_identity': 'admin'
     }
-
-    def __init__(self, nome, sobrenome, celular, email, senha, id_empresa=None):
-        super().__init__('admin', nome, sobrenome, celular, email, senha, id_empresa)
+    def __init__(self, **kwargs):
+        kwargs.pop('tipo_acesso', None) # validado fora do objeto
+        super().__init__(tipo_acesso='admin', **kwargs)
 
 
     def to_dict(self):
@@ -21,20 +21,18 @@ class Admin(User):
             'tipo_acesso': self.tipo_acesso,
         }
 
-    @classmethod
     def get_users(cls):
         return UserManager.get_users()
 
     def add_user(self, data):
         return UserManager.add_user(data)
 
-    def atualizar_usuario(self, user_id, data):
+    def update_user(self, user_id, data):
         return UserManager.update_user(user_id, data)
 
     def deletar_usuario(self, user_id):
         return UserManager.delete_user(user_id)
 
-    @classmethod
     def get_empresas(cls):
         return EmpresaManager.get_empresas()
 

@@ -11,36 +11,61 @@
                 <div class="modal-body">
                         <div class="row">                        
                             <div class="mb-3 col-2">
-                                <label for="id" class="form-label">ID</label>
-                                <input type="text" class="form-control" id="id" name="id" disabled>
+                                <div class="form-floating mb-1">
+                                    <input placeholder="id" type="text" class="form-control" id="id" name="id" required disabled>
+                                    <label for="id">Id</label>
+                                </div>
                             </div>
                             <div class="mb-3 col-5">
-                                <label for="nome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="nome" name="nome" disabled>
+                                <div class="form-floating mb-1">
+                                    <input placeholder="Nome" type="text" class="form-control" id="nome" name="nome" required disabled>
+                                    <label for="nome">Nome</label>
+                                </div>
+                                <div id="nomeFeedback" class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3 col-5">
-                                <label for="sobrenome" class="form-label">Sobrenome</label>
-                                <input type="text" class="form-control" id="sobrenome" name="sobrenome" disabled>
+                                <div class="form-floating mb-1">
+                                    <input placeholder="Sobrenome" type="text" class="form-control" id="sobrenome" name="sobrenome" required disabled>
+                                    <label for="sobrenome">Sobrenome</label>
+                                </div>
+                                <div id="sobrenomeFeedback" class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="mb-3 col-6">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" disabled>
+                                <div class="form-floating mb-1">
+                                    <input placeholder="email@contato.com" type="email" class="form-control" id="email" name="email" required disabled>
+                                    <label for="email">Email</label>
+                                </div>
+                                <div id="emailFeedback" class="invalid-feedback"></div>
                             </div>
                             <div class="mb-3 col-6">
-                                <label for="celular" class="form-label">Celular</label>
-                                <input type="text" class="form-control" id="celular" name="celular" disabled>
+                                <div class="form-floating mb-1">
+                                    <input placeholder="(11)9.XXXX-XXXX" type="tel" class="form-control" id="celular" name="celular" required disabled>
+                                    <label for="celular">Celular</label>
+                                </div>
+                                <div id="celularFeedback" class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="mb-3 col-6">
-                                <label for="tipo-acesso" class="form-label">Tipo de Acesso</label>
-                                <input type="text" class="form-control" id="tipo-acesso" name="tipo_acesso" disabled>
+                                <div class="form-floating mb-1">
+                                    <select class="form-select" id="tipoAcesso" name="tipoAcesso" required disabled>
+                                        <option value="">Tipo de acesso</option>
+                                        <option value="admin">Administrativo</option>
+                                        <option value="financeiro">Financeiro</option>
+                                        <option value="gerente">Gerente</option>
+                                    </select>
+                                    <label for="tipoAcesso">Tipo de Acesso</label>
+                                </div>
                             </div>
                             <div class="mb-3 col-6">
-                                <label for="empresa" class="form-label">Empresa</label>
-                                <input type="text" class="form-control" id="empresa" name="empresa" disabled>
+                                <div class="form-floating mb-1" >
+                                    <select class="form-select" id="select-empresa-modal" name="select-empresa" required>
+                                        <option value="">Selecionar Empresa</option>
+                                    </select>
+                                    <label for="select-empresa">Selecinar Empresa</label>
+                                </div>
                             </div>
                         </div>
                 </div>

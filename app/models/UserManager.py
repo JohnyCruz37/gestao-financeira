@@ -45,7 +45,7 @@ class UserManager:
     
     @classmethod
     def add_user(cls, data):
-        tipo_acesso = data.get('tipo_acesso')
+        tipo_acesso = data.get('tipoAcesso')
         if tipo_acesso not in ['admin', 'financeiro', 'gerente']:
             return None, 'Tipo de acesso inválido'
 
@@ -55,7 +55,9 @@ class UserManager:
         id_empresa = data.get('select-empresa') if tipo_acesso == 'gerente' else None
 
         try:
-            user = cls(
+
+            user = User(
+                tipo_acesso=data['tipoAcesso'],
                 nome=data['nome'],
                 sobrenome=data['sobrenome'],
                 celular=data['celular'],

@@ -5,8 +5,10 @@ class Gerente(User):
     __mapper_args__ = {
         'polymorphic_identity': 'gerente'
     }
-    def __init__(self, nome, sobrenome, celular, email, senha, id_empresa):
-        super().__init__(nome, sobrenome, celular, email, senha, tipo_acesso='gerente', id_empresa=id_empresa)
+    
+    def __init__(self, **kwargs):
+        kwargs.pop('tipo_acesso', None) # validado fora do objeto
+        super().__init__(tipo_acesso='gerente', **kwargs)
     
     empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id'), nullable=False)
     contas_a_pagar = db.relationship('ContaAPagar', backref='gerente', lazy=True, foreign_keys='ContaAPagar.id_gerente')

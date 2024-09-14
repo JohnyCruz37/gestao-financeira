@@ -25,5 +25,6 @@ def get_empresas_route():
     if current_user.tipo_acesso!= 'admin':
         return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
     
-    empresas = Admin.get_empresas()
+    admin = Admin(**current_user.__dict__)
+    empresas = admin.get_empresas()
     return jsonify(empresas)

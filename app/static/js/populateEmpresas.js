@@ -1,6 +1,6 @@
 import { openModalEmpresas } from "./modalEmpresa.js";
-export async function populateSelect() {
-    const selectEmpresa = document.getElementById('select-empresa');
+export async function populateSelect(id) {
+    const selectEmpresa = document.getElementById(id);
     selectEmpresa.innerHTML = `<option value="">Selecionar Empresa</option>`;
     try {
         const empresas = await fetchEmpresas(); // Chama a nova função para buscar as empresas
@@ -27,7 +27,7 @@ export async function fetchEmpresas() {
 }
 export async function populateTableEmpresas(id) {
     try {
-        const empresas = await fetchEmpresas(); // Reutilizando a função fetchEmpresas para buscar os dados
+        const empresas = await fetchEmpresas();
         const table = document.getElementById(id);
         let tableContent = '';
         if (empresas.length === 0) {
