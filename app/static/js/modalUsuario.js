@@ -1,6 +1,8 @@
 import { populateSelect } from "./populateEmpresas.js";
 import AlertaJs from "./alertaJs.js";
 import populateTableEmpresasGerentes from "./populateTableEmpresasGerentes.js";
+import { desabilitarForm } from "./utils.js";
+import { habilitarForm } from "./utils.js";
 export function openModalUsuarios(user, empresas) {
     const form = document.getElementById('form-usuario-edicao');
     populateFormUsuarioEdicao(form, user, empresas);
@@ -36,24 +38,6 @@ async function populateFormUsuarioEdicao(form, user, empresas) {
     btnEditar.addEventListener('click', () => habilitarForm(form, btnSalvar));
     btnSalvar.addEventListener('click', () => salvarEdicaoUsuario(user, form, btnSalvar, empresas));
     document.getElementById('modalUsuario').addEventListener('hidden.bs.modal', () => resetarForm(form, btnSalvar, user, empresas));
-}
-function habilitarForm(form, btn) {
-    const inputs = form.querySelectorAll('input, select');
-    inputs.forEach(input => {
-        if (input.id !== 'id') {
-            input.disabled = false;
-        }
-    });
-    btn.style.display = 'block';
-}
-function desabilitarForm(form, btn) {
-    const inputs = form.querySelectorAll('input, select');
-    inputs.forEach(input => {
-        if (input.id !== 'id') {
-            input.disabled = true;
-        }
-    });
-    btn.style.display = 'none';
 }
 function resetarForm(form, btn, user, empresas) {
     btn.removeEventListener('click', () => salvarEdicaoUsuario(user, form, btn, empresas));

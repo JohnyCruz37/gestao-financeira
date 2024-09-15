@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{url_for('static', filename='css/modal.css')}}">
 <div class="modal fade" id="modalEmpresas" tabindex="-1" aria-labelledby="modalEmpresasLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -5,27 +6,37 @@
                 <h5 class="modal-title" id="modalEmpresasLabel">Detalhes da Empresa</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form id="form-empresa">
+            <form id="form-empresa-edicao">
+                <div class="modal-body">
                     <div class="mb-3">
-                        <label for="empresa-id" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="empresa-id" disabled>
+                        <label for="id" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="id" disabled>
                     </div>
                     <div class="mb-3">
-                        <label for="empresa-razao-social" class="form-label">Razão Social</label>
-                        <input type="text" class="form-control" id="empresa-razao-social" disabled>
+                        <div class="form-floating mb-1">
+                            <input placeholder="CNPJ" type="text" class="form-control" id="cnpj" name="cnpj" required disabled>
+                            <label for="cnpj">CNPJ</label>
+                        </div>
+                        <div id="cnpjFeedback" class="invalid-feedback"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="empresa-cnpj" class="form-label">CNPJ</label>
-                        <input type="text" class="form-control" id="empresa-cnpj" disabled>
+                        <div class="form-floating mb-1">
+                            <input placeholder="Razão Social" type="text" class="form-control" id="razao-social" name="razao_social" required disabled>
+                            <label for="razao-social">Razão Social</label>
+                        </div>
+                        <div id="razaoSocialFeedback" class="invalid-feedback"></div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button id="btn-editar-empresa" class="btn btn-info">Editar</button>
-                <button id="btn-salvar-empresa" class="btn btn-success d-none">Salvar</button>
-                <button id="btn-cancelar-empresa" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="area-btn-salvar">
+                        <button type="button" class="btn btn-success" id="btn-salvar-empresa">Salvar</button>
+                    </div>
+                    <div class="area-btns-editar-cancl">
+                        <button type="button" class="btn btn-info" id="btn-editar-empresa">Editar</button>
+                        <button type="button" id="btn-cancelar-usuario" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

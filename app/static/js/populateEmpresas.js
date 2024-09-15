@@ -48,7 +48,7 @@ export async function populateTableEmpresas(id) {
             empresas.forEach(empresa => {
                 tableContent += `
                     <tr>
-                        <td>${empresa.id}</td>
+                        <td>${empresa.id.toString()}</td>
                         <td>${empresa.razao_social}</td>
                         <td>${empresa.cnpj}</td>
                         <td>

@@ -28,3 +28,17 @@ def get_empresas_route():
     admin = Admin(**current_user.__dict__)
     empresas = admin.get_empresas()
     return jsonify(empresas)
+
+@apis.route('/empresas/<id>', methods=['PUT'])
+@login_required
+def update_empresa_route(id):
+    if current_user.tipo_acesso!= 'admin':
+        return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
+    
+    data = request.get_json()
+    admin = Admin(**current_user.__dict__)
+    sucesso, msg = admin.update_empresa(id, data)
+    if sucesso:
+        return jsonify({'message': msg}), 200
+    else:
+        return jsonify({'message': msg}), 400

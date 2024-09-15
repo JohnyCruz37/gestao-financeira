@@ -38,18 +38,12 @@ class EmpresaManager:
 
     @classmethod
     def update_empresa(cls, empresa_id, data):
-        empresa = cls.query.get(empresa_id)
+        empresa = Empresa.query.get(empresa_id)
         if not empresa:
             return None, 'Empresa não encontrada'
         
-        # Verificar se o CNPJ já existe
-        if 'cnpj' in data:
-            existing_empresa = cls.query.filter_by(cnpj=data['cnpj']).first()
-            if existing_empresa and existing_empresa.id != empresa_id:
-                return None, 'CNPJ já cadastrado por outra empresa'
-        
         # Atualizar os campos permitidos
-        allowed_updates = ['cnpj', 'razao_social']
+        allowed_updates = ['razao_social']
         for key, value in data.items():
             if key in allowed_updates:
                 setattr(empresa, key, value)
