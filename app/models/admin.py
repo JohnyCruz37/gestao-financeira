@@ -24,13 +24,13 @@ class Admin(User):
     def get_users(cls):
         return UserManager.get_users()
 
-    def add_user(self, data):
-        return UserManager.add_user(data)
+    def add_user(self, data, id_empresa=None):
+        return UserManager.add_user(data, id_empresa)
 
     def update_user(self, user_id, data):
         return UserManager.update_user(user_id, data)
 
-    def deletar_usuario(self, user_id):
+    def delete_user(self, user_id):
         return UserManager.delete_user(user_id)
 
     def get_empresas(cls):
@@ -40,14 +40,14 @@ class Admin(User):
     def add_empresa(cls, data):
         return EmpresaManager.add_empresa(data)
 
-    def update_empresa(self, empresa_id, data):
-        return EmpresaManager.update_empresa(empresa_id, data)
+    def update_empresa(self, id_empresa, data):
+        return EmpresaManager.update_empresa(id_empresa, data)
 
-    def delete_empresa(self, empresa_id):
-        return EmpresaManager.delete_empresa(empresa_id)
+    def delete_empresa(self, id_empresa):
+        return EmpresaManager.delete_empresa(id_empresa)
 
-    def filtrar_contas_por_empresa(self, empresa_id):
-        return ContasManager.filtrar_contas_por_empresa(empresa_id)
+    def filtrar_contas_por_empresa(self, id_empresa):
+        return ContasManager.filtrar_contas_por_empresa(id_empresa)
     
     def aprovar_conta(self, conta_id):
         return ContasManager.aprovar_conta(conta_id)

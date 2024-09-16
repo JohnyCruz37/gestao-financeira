@@ -2,8 +2,8 @@ from app import db
 from .conta_a_pagar import ContaAPagar
 class ContasManager:
     @classmethod
-    def filtrar_contas_por_empresa(cls, empresa_id):
-        return ContaAPagar.query.filter_by(empresa_id=empresa_id).all()
+    def filtrar_contas_por_empresa(cls, id_empresa):
+        return ContaAPagar.query.filter_by(id_empresa=id_empresa).all()
 
     @classmethod
     def aprovar_conta(cls, conta_id):

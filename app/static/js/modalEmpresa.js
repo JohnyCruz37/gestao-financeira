@@ -14,10 +14,12 @@ export default function populateFormEmpresaEdicao(form, empresa) {
     form.querySelector('#cnpj').value = empresa.cnpj;
     const btnEditar = form.querySelector('#btn-editar-empresa');
     const btnSalvar = form.querySelector('#btn-salvar-empresa');
+    const btnExcluir = form.querySelector('#confirm-excluir-sim-empresa');
     btnEditar.removeEventListener('click', () => habilitarForm(form, btnSalvar));
     btnSalvar.removeEventListener('click', () => salvarEdicaoEmpresa(form, btnSalvar, empresa));
     btnEditar.addEventListener('click', () => habilitarForm(form, btnSalvar));
     btnSalvar.addEventListener('click', () => salvarEdicaoEmpresa(form, btnSalvar, empresa));
+    btnExcluir.addEventListener('click', () => fetchExcluirEmpresa(empresa.id));
     document.getElementById('modalEmpresas').addEventListener('hidden.bs.modal', () => resetarForm(form, btnSalvar, empresa));
 }
 function resetarForm(form, btn, empresas) {
@@ -56,5 +58,28 @@ async function fetchSalvarEdicaoEmpresa(updateEmpresa) {
     catch (error) {
         console.error('Erro na requisição:', error);
         AlertaJs.showAlert('Houve um erro ao atualizar a empresa.', 'danger');
+    }
+}
+async function fetchExcluirEmpresa(id) {
+    try {
+        const response = await fetch(`/api/empresas/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const result = await response.json();
+        if (response.ok) {
+            AlertaJs.showAlert('Empresa excluída com sucesso!', 'success');
+            populateTableEmpresas('table-empresas-e-gerentes');
+        }
+        else {
+            console.error('Erro ao excluir o empresa:', result.message);
+            AlertaJs.showAlert(result.message, 'danger');
+        }
+    }
+    catch (error) {
+        console.error('Erro na requisição:', error);
+        AlertaJs.showAlert('Houve um erro ao excluir a empresa.', 'danger');
     }
 }

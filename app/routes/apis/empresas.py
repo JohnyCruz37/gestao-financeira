@@ -42,3 +42,16 @@ def update_empresa_route(id):
         return jsonify({'message': msg}), 200
     else:
         return jsonify({'message': msg}), 400
+
+@apis.route('/empresas/<id>', methods=['DELETE'])
+@login_required
+def delete_empresa_route(id):
+    if current_user.tipo_acesso!= 'admin':
+        return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
+    
+    admin = Admin(**current_user.__dict__)
+    sucesso, msg = admin.delete_empresa(id)
+    if sucesso:
+        return jsonify({'message': msg}), 200
+    else:
+        return jsonify({'message': msg}), 400

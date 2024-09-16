@@ -29,10 +29,18 @@
                 </div>
                 <div class="modal-footer">
                     <div class="area-btn-salvar">
-                        <button type="button" class="btn btn-success" id="btn-salvar-empresa">Salvar</button>
+                        <button type="button" class="btn btn-outline-danger" id="btn-excluir-empresa" data-bs-toggle="dropdown" aria-expanded="false">Excluir</button>
+                        <ul class="dropdown-menu p-3" id="confirm-excluir-empresa">
+                            <li class="text-center mb-2">Quer mesmo excluir essa empresa?</li>
+                            <li class="text-center">
+                                <button class="btn btn-sm btn-danger me-2" id="confirm-excluir-sim-empresa">SIM</button>
+                                <button type="button" class="btn btn-sm btn-secondary" id="confirm-excluir-nao-empresa">NÃO</button>
+                            </li>
+                        </ul>
                     </div>
                     <div class="area-btns-editar-cancl">
-                        <button type="button" class="btn btn-info" id="btn-editar-empresa">Editar</button>
+                        <button type="button" class="btn btn-outline-success" id="btn-salvar-empresa">Salvar</button>
+                        <button type="button" class="btn btn-outline-info" id="btn-editar-empresa">Editar</button>
                         <button type="button" id="btn-cancelar-usuario" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
                     </div>
                 </div>

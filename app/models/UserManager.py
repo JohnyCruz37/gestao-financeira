@@ -44,30 +44,29 @@ class UserManager:
             return None, str(e)
     
     @classmethod
-    def add_user(cls, data):
+    def add_user(cls, data, id_empresa=None):
         tipo_acesso = data.get('tipoAcesso')
         if tipo_acesso not in ['admin', 'financeiro', 'gerente']:
             return None, 'Tipo de acesso inválido'
 
         if User.query.filter_by(email=data.get('email')).first():
             return None, 'Email já cadastrado'
-        
-        id_empresa = data.get('select-empresa') if tipo_acesso == 'gerente' else None
 
         try:
-
             user = User(
                 tipo_acesso=data['tipoAcesso'],
                 nome=data['nome'],
                 sobrenome=data['sobrenome'],
                 celular=data['celular'],
                 email=data['email'],
-                senha=data['password'],
                 id_empresa=id_empresa
             )
+            user.secret_senha = data['password']
+            
             db.session.add(user)
             db.session.commit()
             return True, 'Usuário criado com sucesso'
         except Exception as e:
             db.session.rollback()
             return None, str(e)
+

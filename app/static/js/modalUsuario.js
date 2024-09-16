@@ -33,11 +33,13 @@ async function populateFormUsuarioEdicao(form, user, empresas) {
     }
     const btnEditar = form.querySelector('#btn-editar-usuario');
     const btnSalvar = form.querySelector('#btn-salvar-usuario');
+    const btnExcluir = form.querySelector('#confirm-excluir-sim-usuario');
     btnEditar.removeEventListener('click', () => habilitarForm(form, btnSalvar));
     btnSalvar.removeEventListener('click', () => salvarEdicaoUsuario(user, form, btnSalvar, empresas));
     btnEditar.addEventListener('click', () => habilitarForm(form, btnSalvar));
     btnSalvar.addEventListener('click', () => salvarEdicaoUsuario(user, form, btnSalvar, empresas));
-    document.getElementById('modalUsuario').addEventListener('hidden.bs.modal', () => resetarForm(form, btnSalvar, user, empresas));
+    btnExcluir.addEventListener('click', () => fetchExcluirUsuario(user.id));
+    document.getElementById('modalUsuario').addEventListener('hidden.bs.modal', () => resetarForm(form, btnSalvar, user, empresas)); //Não está fechando o modal
 }
 function resetarForm(form, btn, user, empresas) {
     btn.removeEventListener('click', () => salvarEdicaoUsuario(user, form, btn, empresas));
@@ -81,11 +83,34 @@ async function fetchSalvarEdicaoUsuario(updatedUser) {
         }
         else {
             console.error('Erro ao atualizar o usuário:', result.message);
-            AlertaJs.showAlert('Houve um erro ao atualizar o usuário.', 'danger');
+            AlertaJs.showAlert(result.message, 'danger');
         }
     }
     catch (error) {
         console.error('Erro na requisição:', error);
         AlertaJs.showAlert('Houve um erro ao atualizar o usuário.', 'danger');
+    }
+}
+async function fetchExcluirUsuario(userId) {
+    try {
+        const response = await fetch(`/api/users/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const result = await response.json();
+        if (response.ok) {
+            AlertaJs.showAlert('Usuário excluído com sucesso!', 'success');
+            populateTableEmpresasGerentes('table-empresas-e-gerentes');
+        }
+        else {
+            console.error('Erro ao excluir o usuário:', result.message);
+            AlertaJs.showAlert(result.message, 'danger');
+        }
+    }
+    catch (error) {
+        console.error('Erro na requisição:', error);
+        AlertaJs.showAlert('Houve um erro ao excluir o usuário.', 'danger');
     }
 }

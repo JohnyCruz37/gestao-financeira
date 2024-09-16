@@ -4,7 +4,7 @@
 }
 
 .area-btn-salvar{
-    flex: 1 1 0;
+    width: auto;
 }
 
 #btn-salvar-usuario,
@@ -15,4 +15,16 @@
 .area-btns-editar-cancl{
     width: auto;
     padding: 0 1rem;
+    flex: 1 1 0;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.area-btns-editar-cancl button{
+    margin-left: 0.5rem;
+}
+
+#btn-exluir-usuario::after {
+    display: none;
 }

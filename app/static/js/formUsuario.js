@@ -3,13 +3,14 @@ import populateTableEmpresasGerentes from "./populateTableEmpresasGerentes.js";
 // import ValidadorInput from "./validadorInputs.js";
 // import validarCampo from "./validarCampo.js";
 export default function configurarFormUsuario() {
-    document.getElementById('usuarioForm')?.addEventListener('submit', function (event) {
+    const form = document.getElementById('usuarioForm');
+    form.addEventListener('submit', function (event) {
         event.preventDefault();
         // Validar Nome
         // Valiar Sobrenome
         // Validar Senha
         // Validar Celular
-        if (document.querySelectorAll('.is-invalid').length === 0) {
+        if (form.querySelectorAll('.is-invalid').length === 0) {
             const formData = new FormData(this);
             const data = Object.fromEntries(formData.entries());
             fetch('/api/users', {
@@ -41,8 +42,8 @@ export default function configurarFormUsuario() {
         }
     });
     const handleTipoAcessoChange = () => {
-        const tipoAcessoInput = document.getElementById('tipoAcesso');
-        const selectEmpresa = document.getElementById('select-empresa');
+        const tipoAcessoInput = form.querySelector('#tipoAcesso');
+        const selectEmpresa = form.querySelector('#select-empresa');
         if (tipoAcessoInput.value === 'gerente') {
             selectEmpresa.disabled = false;
         }
@@ -51,5 +52,5 @@ export default function configurarFormUsuario() {
             selectEmpresa.disabled = true;
         }
     };
-    document.getElementById('tipoAcesso')?.addEventListener('change', handleTipoAcessoChange);
+    form.querySelector('#tipoAcesso')?.addEventListener('change', handleTipoAcessoChange);
 }

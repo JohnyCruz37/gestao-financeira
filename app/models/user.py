@@ -19,13 +19,11 @@ class User(db.Model, UserMixin):
 
     def __init__(self, tipo_acesso, **kwargs):
         self.tipo_acesso = tipo_acesso
-
         self.nome = kwargs.get('nome')
         self.sobrenome = kwargs.get('sobrenome')
         self.celular = kwargs.get('celular')
         self.email = kwargs.get('email')
         self.id_empresa = kwargs.get('id_empresa')
-        self.senha_hash = kwargs.get('senha', self.senha_hash) 
 
     @property
     def secret_senha(self):

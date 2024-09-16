@@ -12,9 +12,9 @@ def post_users():
         return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
     
     data = request.get_json()
-    id_empresa = data.get('id_empresa') if 'id_empresa' in data else None
-    admin = Admin(**current_user.__dict__, id_empresa=id_empresa)
-    sucesso, msg = admin.add_user(data)
+    id_empresa = data.get('select-empresa') if 'select-empresa' in data else None
+    admin = Admin(**current_user.__dict__)
+    sucesso, msg = admin.add_user(data, id_empresa)
     if sucesso:
         return jsonify({'message': msg}), 201
     else:
@@ -45,6 +45,20 @@ def update_user_route(id):
 
     admin = Admin(**current_user.__dict__)
     sucesso, msg = admin.update_user(id, data)
+    if sucesso:
+        return jsonify({'message': msg}), 200
+    else:
+        return jsonify({'message': msg}), 400
+
+
+@apis.route('/users/<id>', methods=['DELETE'])
+@login_required
+def delete_user_route(id):
+    if current_user.tipo_acesso!= 'admin':
+        return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
+    
+    admin = Admin(**current_user.__dict__)
+    sucesso, msg = admin.delete_user(id)
     if sucesso:
         return jsonify({'message': msg}), 200
     else:

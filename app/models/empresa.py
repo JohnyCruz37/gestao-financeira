@@ -6,7 +6,7 @@ class Empresa(db.Model):
     cnpj = db.Column(db.String(14), unique=True, nullable=False)
     razao_social = db.Column(db.String(100), nullable=False)
 
-    gerentes = db.relationship('Gerente', backref='empresa', uselist=False, foreign_keys='Gerente.empresa_id')
+    gerentes = db.relationship('Gerente', backref='empresa', uselist=False, foreign_keys='Gerente.id_empresa')
     contas_a_pagar = db.relationship('ContaAPagar', backref='empresa_rel', lazy='dynamic', foreign_keys='ContaAPagar.id_empresa')
 
     def __repr__(self):

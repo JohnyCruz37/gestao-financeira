@@ -10,7 +10,6 @@ class Gerente(User):
         kwargs.pop('tipo_acesso', None) # validado fora do objeto
         super().__init__(tipo_acesso='gerente', **kwargs)
     
-    empresa_id = db.Column(db.Integer, db.ForeignKey('empresas.id'), nullable=False)
     contas_a_pagar = db.relationship('ContaAPagar', backref='gerente', lazy=True, foreign_keys='ContaAPagar.id_gerente')
 
     def __repr__(self):

@@ -3,15 +3,16 @@ import AlertaJs from "./alertaJs.js";
 import validarCampo from "./validarCampo.js";
 import { populateSelect, populateTableEmpresas } from "./populateEmpresas.js";
 export default function configurarFormEmpresa() {
-    document.getElementById('empresaForm')?.addEventListener('submit', function (event) {
+    const form = document.getElementById('empresaForm');
+    form.addEventListener('submit', function (event) {
         event.preventDefault();
-        const cnpjInput = document.getElementById('cnpj');
+        const cnpjInput = form.querySelector('#cnpj');
         const validadorCnpj = new ValidadorInput(cnpjInput);
-        const cnpjFeedback = document.getElementById('cnpjFeedback');
+        const cnpjFeedback = form.querySelector('#cnpjFeedback');
         validarCampo(cnpjInput, validadorCnpj, cnpjFeedback);
         // Validar como Razão Social
-        const razaoSocialInput = document.getElementById('razao-social');
-        const razaoSocialFeedback = document.getElementById('razaoSocialFeedback');
+        const razaoSocialInput = form.querySelector('#razao-social');
+        const razaoSocialFeedback = form.querySelector('#razaoSocialFeedback');
         if (razaoSocialInput.value.trim() === '') {
             razaoSocialInput.classList.add('is-invalid');
             razaoSocialFeedback.textContent = 'Por favor, insira a razão social.';
@@ -22,7 +23,7 @@ export default function configurarFormEmpresa() {
             razaoSocialInput.classList.add('is-valid');
             razaoSocialFeedback.style.display = 'none';
         }
-        if (document.querySelectorAll('.is-invalid').length === 0) {
+        if (form.querySelectorAll('.is-invalid').length === 0) {
             const formData = new FormData(this);
             const data = Object.fromEntries(formData.entries());
             fetch('/api/empresas', {
@@ -41,7 +42,7 @@ export default function configurarFormEmpresa() {
                 if (status >= 200 && status < 300) {
                     AlertaJs.showAlert(body.message, 'success');
                     this.reset();
-                    populateSelect();
+                    populateSelect('select-empresa');
                     populateTableEmpresas('table-empresas');
                 }
                 else {

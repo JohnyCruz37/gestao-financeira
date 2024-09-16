@@ -71,10 +71,22 @@
                 </div>
                 <div class="modal-footer">
                     <div class="area-btn-salvar">
-                        <button type="button" class="btn btn-success" id="btn-salvar-usuario">Salvar</button>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-outline-danger dropdown-toggle" id="btn-exluir-usuario" data-bs-toggle="dropdown" aria-expanded="false">
+                                Excluir
+                            </button>
+                            <ul class="dropdown-menu p-3" id="confirm-excluir-usuario">
+                                <li class="text-center mb-2">Quer mesmo excluir esse usuário?</li>
+                                <li class="text-center">
+                                    <button class="btn btn-sm btn-danger me-2" id="confirm-excluir-sim-usuario">SIM</button>
+                                    <button type="button" class="btn btn-sm btn-secondary" id="confirm-excluir-nao-usuario">NÃO</button>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="area-btns-editar-cancl">
-                        <button type="button" class="btn btn-info" id="btn-editar-usuario">Editar</button>
+                        <button type="button" class="btn btn-outline-success" id="btn-salvar-usuario">Salvar</button>
+                        <button type="button" class="btn btn-outline-info" id="btn-editar-usuario">Editar</button>
                         <button type="button" id="btn-cancelar-usuario" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
                     </div>
                 </div>

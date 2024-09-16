@@ -6,8 +6,8 @@ class EmpresaManager:
         return [empresa.to_dict() for empresa in Empresa.query.all()]
 
     @classmethod
-    def delete_empresa(cls, empresa_id):
-        empresa = cls.query.get(empresa_id)
+    def delete_empresa(cls, id_empresa):
+        empresa = Empresa.query.get(id_empresa)
         if not empresa:
             return None, 'Empresa não encontrada'
         
@@ -17,6 +17,8 @@ class EmpresaManager:
     
     @classmethod
     def add_empresa(cls, data):
+        if Empresa.cnpj_existe(data['cnpj']):
+            return None, 'CNPJ já cadastrado'
         try:
             empresa = Empresa(
                 cnpj=data['cnpj'],
@@ -30,15 +32,15 @@ class EmpresaManager:
             return None, str(e)
     
     @classmethod
-    def get_empresa_by_id(cls, empresa_id):
-        empresa = cls.query.get(empresa_id)
+    def get_empresa_by_id(cls, id_empresa):
+        empresa = cls.query.get(id_empresa)
         if not empresa:
             return None, 'Empresa não encontrada'
         return empresa.to_dict(), 'Empresa encontrada'
 
     @classmethod
-    def update_empresa(cls, empresa_id, data):
-        empresa = Empresa.query.get(empresa_id)
+    def update_empresa(cls, id_empresa, data):
+        empresa = Empresa.query.get(id_empresa)
         if not empresa:
             return None, 'Empresa não encontrada'
         
