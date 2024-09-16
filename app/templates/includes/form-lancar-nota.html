@@ -1,0 +1,47 @@
+<form id="notaForm">
+    <input type="hidden" name="id_gerente" value={{current_user.id}}>
+    <input type="hidden" name="id_empresa" value={{current_user.id_empresa}}>
+    <fieldset class="border p-2 mb-2">
+        <legend class="w-auto text-muted small">Detalhes da Nota</legend>
+        <div class="form-floating mb-1">
+            <input placeholder="Número da nota" type="text" class="form-control" id="numeroNota" name="numeroNota" required>
+            <label for="numeroNota">Número da Nota</label>
+        </div>
+        <div id="numeroNotaFeedback" class="invalid-feedback"></div>
+
+        <div class="form-floating mb-1">
+            <input placeholder="Valor da nota" type="text" class="form-control" id="valorNota" name="valorNota" required>
+            <label for="valorNota">Valor da Nota</label>
+        </div>
+        <div id="valorNotaFeedback" class="invalid-feedback"></div>
+
+        <div class="form-floating mb-1">
+            <input placeholder="Fornecedor" type="text" class="form-control" id="fornecedor" name="fornecedor" required>
+            <label for="fornecedor">Fornecedor</label>
+        </div>
+        <div id="fornecedorFeedback" class="invalid-feedback"></div>
+        
+        <div class="form-floating mb-1">
+            <input type="file" class="form-control" id="notaFiscal" name="notaFiscal" accept="image/*" required>
+            <label for="notaFiscal">Nota Fiscal (imagem)</label>
+        </div>
+        <div id="notaFiscalFeedback" class="invalid-feedback"></div>
+        
+        <div class="form-floating mb-1">
+            <input type="date" class="form-control" id="vencimento" name="vencimento" required>
+            <label for="vencimento">Vencimento</label>
+        </div>
+        <div id="vencimentoFeedback" class="invalid-feedback"></div>
+
+        <div class="form-floating mb-1">
+            <input placeholder="Forma de pagamento" type="text" class="form-control" id="formaPagamento" name="formaPagamento" required>
+            <label for="formaPagamento">Forma de Pagamento</label>
+        </div>
+        <div id="formaPagamentoFeedback" class="invalid-feedback"></div>
+    </fieldset>
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="button" class="btn btn-secondary" id="limparFormulario">Limpar</button>
+    </div>
+</form>

@@ -1,0 +1,14 @@
+{% extends 'pages/base-app.html' %}
+
+{% block titulo %}
+Lançar nova conta
+{% endblock %}
+
+{% block main %}
+ <h1>Formulário contas a pagar</h1>
+ {% include "includes/form-lancar-nota.html" %}
+{% endblock %}
+
+{% block scriptBaseApp %}
+<script type="module" src="{{url_for('static', filename='js/paginaFormLancarConta.js')}}"></script>
+{% endblock %}

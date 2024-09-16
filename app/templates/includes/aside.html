@@ -1,5 +1,9 @@
 <aside class="aside col-2 full-height bloco-shadow">
     <a class="nav-link" href="{{url_for('pages.pagina_inicial')}}"><i class="bi bi-box-arrow-right"></i> Página Inicial</a>
     <a class="nav-link" href="{{url_for('pages.empresas')}}"><i class="bi bi-box-arrow-right"></i> Empresas</a>
+    {% if current_user.tipo_acesso == 'gerente' %}
+        <a class="nav-link" href="{{ url_for('pages.lancar_conta', id_gerente=current_user.id, id_empresa=current_user.id_empresa) }}"><i class="bi bi-box-arrow-right"></i> Lançar Conta</a>
+    {% endif %}
+    
     <a class="nav-link" href="{{url_for('pages.logout')}}"><i class="bi bi-box-arrow-right"></i> sair</a>
 </aside>

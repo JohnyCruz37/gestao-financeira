@@ -7,10 +7,12 @@ class ContaAPagar(db.Model):
     fornecedor = db.Column(db.String(100), nullable=False)
     vencimento = db.Column(db.Date, nullable=False)
     forma_pagamento = db.Column(db.String(50), nullable=False)
+    url_comprovante_pagamento = db.Column(db.String(200), nullable=True)
+    url_nota_fiscal = db.Column(db.String(200), nullable=False)
     id_empresa = db.Column(db.Integer, db.ForeignKey('empresas.id'), nullable=False)  
     id_gerente = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)  
 
-    status = db.Column(db.String(20), default='pendente') 
+    status = db.Column(db.String(20), default='pendente')
     comprovante = db.Column(db.String(200), nullable=True)
 
 
