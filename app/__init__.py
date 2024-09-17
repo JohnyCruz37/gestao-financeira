@@ -23,6 +23,8 @@ def create_app():
     login_manager.login_view = 'pages.login'
     login_manager.login_message_category = 'info'
 
+    app.config['UPLOAD_FOLDER'] = Config.UPLOAD_FOLDER
+
     @login_manager.user_loader
     def load_user(user_id):
         from app.models.user import User

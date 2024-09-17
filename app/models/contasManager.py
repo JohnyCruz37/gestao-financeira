@@ -14,5 +14,5 @@ class ContasManager:
             return True, 'Conta aprovada com sucesso'
         return False, 'Conta não encontrada ou já aprovada'
 
-    def visualizar_contas_pagamento(cls):
-        return ContaAPagar.query.filter_by(status='pago').all()
+    def visualizar_contas_status(cls, status_conta):
+        return ContaAPagar.query.filter_by(status=status_conta).all()
