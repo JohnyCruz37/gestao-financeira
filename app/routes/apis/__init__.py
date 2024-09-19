@@ -14,4 +14,5 @@ from .user import post_users,\
                 delete_user_route
 
 from .contas_a_pagar import post_conta_a_pagar,\
-                            post_imagem_nota_fiscal
+                            post_imagem_nota_fiscal,\
+                            get_contas_a_pagar

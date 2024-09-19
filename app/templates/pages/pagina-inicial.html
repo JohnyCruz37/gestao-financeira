@@ -5,8 +5,16 @@ Página Inicial
 {% endblock %}
 
 {% block main %}
-    <h1>pagina inicial</h1>
+    {% if current_user.tipo_acesso == 'admin' %}
+        <h1>Lista de contas para aprovação</h1>
+    {% elif current_user.tipo_acesso == 'financeiro' %}
+        <h1>Lista de contas para serem pagas</h1>
+    {% elif current_user.tipo_acesso == 'gerente' %}
+        <h1>Lista de contas lançadas</h1>
+    {% endif %}
+    {% include "includes/tabela-conta-a-pagar.html" %}
 {% endblock %}
 
 {% block scriptBaseApp %}
+    <script type="module" src="{{url_for('static', filename='js/tabelaContaAPagar.js')}}"></script>
 {% endblock %}

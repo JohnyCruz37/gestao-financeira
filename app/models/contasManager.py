@@ -1,9 +1,6 @@
 from app import db
 from .conta_a_pagar import ContaAPagar
 class ContasManager:
-    @classmethod
-    def filtrar_contas_por_empresa(cls, id_empresa):
-        return ContaAPagar.query.filter_by(id_empresa=id_empresa).all()
 
     @classmethod
     def aprovar_conta(cls, conta_id):
@@ -14,5 +11,39 @@ class ContasManager:
             return True, 'Conta aprovada com sucesso'
         return False, 'Conta não encontrada ou já aprovada'
 
-    def visualizar_contas_status(cls, status_conta):
+    @classmethod
+    def dar_baixa(cls, conta_id):
+        conta = ContaAPagar.query.get(conta_id)
+        if conta and conta.status == 'aprovado':
+            conta.status = 'pago'
+            db.session.commit()
+            return True, 'Pagamento confirmado com sucesso'
+        return False, 'Conta não aprovada ou não encontrada'
+
+    @classmethod
+    def get_contas_status(cls, status_conta):
         return ContaAPagar.query.filter_by(status=status_conta).all()
+    
+    @classmethod
+    def get_contas_id_gerente(cls, id_gerente):
+        return ContaAPagar.query.filter_by(id_gerente=id_gerente).all()
+    
+    @classmethod
+    def get_contas_id_empresa(cls, id_empresa):
+        return ContaAPagar.query.filter_by(id_empresa=id_empresa).all()
+    
+    @classmethod
+    def get_conta_by_id(cls, id_conta):
+        return ContaAPagar.query.get(id_conta)
+    
+    @classmethod
+    def update_status_conta(cls, conta_id, novo_status):
+        conta = ContaAPagar.query.get(conta_id)
+        if conta:
+            if novo_status not in ['pendente', 'aprovado', 'pago']:
+                return False, 'Status inválido'
+            conta.status = novo_status
+            db.session.commit()
+            return True, 'Status atualizado com sucesso'
+        return False, 'Conta não encontrada'
+
