@@ -15,4 +15,5 @@ from .user import post_users,\
 
 from .contas_a_pagar import post_conta_a_pagar,\
                             post_imagem_nota_fiscal,\
-                            get_contas_a_pagar
+                            get_contas_a_pagar,\
+                            update_conta_a_pagar

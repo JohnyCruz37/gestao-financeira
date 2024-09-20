@@ -4,6 +4,8 @@ from app.routes.apis import apis
 from app.decorators.json_required import json_required
 from app.models.conta_a_pagar import ContaAPagar
 from app.models.contasManager import ContasManager
+from app.models.empresaManager import EmpresaManager
+from app.models.UserManager import UserManager
 
 @apis.route('/conta-a-pagar', methods=['POST'])
 @login_required
@@ -34,20 +36,39 @@ def get_contas_a_pagar():
 @apis.route('/conta-a-pagar/<id>', methods=['PUT'])
 @login_required
 def update_conta_a_pagar(id):
-    if current_user.tipo_acesso!= 'admin':
-        return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
+    if current_user.tipo_acesso != 'gerente':
+        data = request.get_json()
+        novo_status = data.get('status')
+
+        sucesso, msg = ContasManager.update_status_conta(id, novo_status)
+        if sucesso:
+            return jsonify({'message': msg}), 200
+        else:
+            return jsonify({'message': msg}), 400
+    return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
     
-    data = request.get_json()
-    novo_status = data.get('status')
 
-    sucesso, msg = ContasManager.update_status_conta(id, novo_status)
-    if sucesso:
-        return jsonify({'message': msg}), 200
-    else:
-        return jsonify({'message': msg}), 400
+@apis.route('/conta-a-pagar/<id>', methods=['GET'])
+@login_required
+def get_conta_a_pagar_by_id(id):    
+    conta = ContasManager.get_conta_by_id(id)
+    try:
+        if conta:
+            dict_conta = conta.to_dict()
+            id_gerente = dict_conta['id_gerente']
+            id_empresa = dict_conta['id_empresa']
+
+            user = UserManager.get_user_by_id(id_gerente)
+            empresa = EmpresaManager.get_empresa_by_id(id_empresa)
+            dict_conta['gerente'] = user
+            dict_conta['empresa'] = empresa
+
+            return jsonify(dict_conta), 200
+        else:
+            return jsonify({'message': 'Conta não encontrada'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
     
-
-
 
 @apis.route('/conta-a-pagar/imagem-nota-fiscal', methods=['POST'])
 @login_required

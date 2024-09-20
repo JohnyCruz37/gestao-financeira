@@ -11,6 +11,13 @@ class UserManager:
         return result
     
     @classmethod
+    def get_user_by_id(cls, user_id):
+        user = User.query.get(user_id)
+        if not user:
+            return None, 'Usuário não encontrada'
+        return user.to_dict()
+    
+    @classmethod
     def delete_user(cls, user_id):
         user = User.query.get(user_id)
         if not user:

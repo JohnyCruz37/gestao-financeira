@@ -33,10 +33,10 @@ class EmpresaManager:
     
     @classmethod
     def get_empresa_by_id(cls, id_empresa):
-        empresa = cls.query.get(id_empresa)
+        empresa = Empresa.query.get(id_empresa)
         if not empresa:
             return None, 'Empresa não encontrada'
-        return empresa.to_dict(), 'Empresa encontrada'
+        return empresa.to_dict()
 
     @classmethod
     def update_empresa(cls, id_empresa, data):

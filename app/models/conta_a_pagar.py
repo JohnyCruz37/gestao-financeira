@@ -23,6 +23,8 @@ class ContaAPagar(db.Model):
     def to_dict(self):
         conta_dict = {
             'id': self.id,
+            'id_gerente': self.id_gerente,
+            'id_empresa': self.id_empresa,
             'numero_nota': self.numero_nota,
             'valor': self.valor,
             'fornecedor': self.fornecedor,
@@ -32,7 +34,6 @@ class ContaAPagar(db.Model):
             'url_nota_fiscal': self.url_nota_fiscal,
         }
 
-        # Adiciona 'url_comprovante_pagamento' somente se existir
         if self.url_comprovante_pagamento:
             conta_dict['url_comprovante_pagamento'] = self.url_comprovante_pagamento
 
