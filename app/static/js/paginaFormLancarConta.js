@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const caminhoImagem = await enviarImagemNota(formData);
             const formDataObj = new FormData(this);
             const data = Object.fromEntries(formDataObj.entries());
+            const vencicmento = document.getElementById('vencimento').value;
+            data['vencimento'] = vencicmento;
             data['url_nota_fiscal'] = caminhoImagem;
             await salvarNota(data);
             AlertaJs.showAlert('Nota salva com sucesso!', 'success');

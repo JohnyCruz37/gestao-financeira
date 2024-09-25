@@ -1,97 +1,104 @@
 <div class="modal fade" id="modalDetalhesConta" tabindex="-1" aria-labelledby="modalDetalhesContaLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalDetalhesContaLabel">Detalhes da Conta a Pagar</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-
-          <h6>Empresa</h6>
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <th>CNPJ</th>
-                <td id="cnpj"></td>
-              </tr>
-              <tr>
-                <th>Razão Social</th>
-                <td id="razao_social"></td>
-              </tr>
-            </tbody>
-          </table>
-  
-          <h6>Gerente</h6>
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <th>Nome</th>
-                <td><span id="nome"></span> <span id="sobrenome"></span></td>
-              </tr>
-              <tr>
-                <th>Email</th>
-                <td id="email"></td>
-              </tr>
-              <tr>
-                <th>Celular</th>
-                <td id="celular"></td>
-              </tr>
-            </tbody>
-          </table>
-  
-          <h6>Conta</h6>
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <th>Número da Nota</th>
-                <td id="numero_nota"></td>
-              </tr>
-              <tr>
-                <th>Valor</th>
-                <td id="valor"></td>
-              </tr>
-              <tr>
-                <th>Forma de Pagamento</th>
-                <td id="forma_pagamento"></td>
-              </tr>
-              <tr>
-                <th>Fornecedor</th>
-                <td id="fornecedor"></td>
-              </tr>
-              <tr>
-                <th>Status</th>
-                <td id="status"><span class="badge bg-success">Pago</span></td>
-              </tr>
-              <tr>
-                <th>Vencimento</th>
-                <td id="vencimento">21/09/2024</td>
-              </tr>
-              <tr>
-                <th>Nota Fiscal</th>
-                <td>
-                  <a href="notas_fiscais_uploads/20/12/orcamento-argel.jpeg" target="_blank" id="url_nota_fiscal">Visualizar Nota Fiscal</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="modal-footer">
-          <div class="area-btn-aprovar-modal">
-            <div class="btn-group">
-                <button type="button" class="btn btn-outline-success dropdown-toggle confir-acao" id="btn-aprovar-modal" data-bs-toggle="dropdown" aria-expanded="false">
-                    Aprovar pagamento
-                </button>
-                <ul class="dropdown-menu p-3" id="confirm-aprovar-modal">
-                    <li class="text-center mb-2">Quer mesmo confirmar esse pagamento?</li>
-                    <li class="text-center">
-                        <button class="btn btn-sm btn-success me-2" id="confirm-aprovar-modal-sim">SIM</button>
-                        <button type="button" class="btn btn-sm btn-secondary" id="confirm-aprovar-modal-nao">NÃO</button>
-                    </li>
-                </ul>
-            </div>
+          <div class="modal-header">
+              <h5 class="modal-title" id="modalDetalhesContaLabel">Detalhes da Conta a Pagar</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-        </div>
+          <div class="modal-body">
+              <h6>Empresa</h6>
+              <table class="table table-bordered">
+                  <tbody>
+                      <tr>
+                          <th>CNPJ</th>
+                          <td id="cnpj"></td>
+                      </tr>
+                      <tr>
+                          <th>Razão Social</th>
+                          <td id="razao_social"></td>
+                      </tr>
+                  </tbody>
+              </table>
+
+              <h6>Gerente</h6>
+              <table class="table table-bordered">
+                  <tbody>
+                      <tr>
+                          <th>Nome</th>
+                          <td><span id="nome"></span> <span id="sobrenome"></span></td>
+                      </tr>
+                      <tr>
+                          <th>Email</th>
+                          <td id="email"></td>
+                      </tr>
+                      <tr>
+                          <th>Celular</th>
+                          <td id="celular"></td>
+                      </tr>
+                  </tbody>
+              </table>
+
+              <h6>Conta</h6>
+              <table class="table table-bordered">
+                  <tbody>
+                      <tr>
+                          <th>Número da Nota</th>
+                          <td id="numero_nota"></td>
+                      </tr>
+                      <tr>
+                          <th>Valor</th>
+                          <td id="valor"></td>
+                      </tr>
+                      <tr>
+                          <th>Forma de Pagamento</th>
+                          <td id="forma_pagamento"></td>
+                      </tr>
+                      <tr>
+                          <th>Fornecedor</th>
+                          <td id="fornecedor"></td>
+                      </tr>
+                      <tr>
+                          <th>Status</th>
+                          <td id="status"><span class="badge bg-success">Pago</span></td>
+                      </tr>
+                      <tr>
+                          <th>Vencimento</th>
+                          <td id="vencimento">21/09/2024</td>
+                      </tr>
+                      <tr>
+                          <th>Nota Fiscal</th>
+                          <td>
+                              <a href="notas_fiscais_uploads/20/12/imagem.jpeg" target="_blank" id="url_nota_fiscal">Visualizar Nota Fiscal</a>
+                          </td>
+                      </tr>
+
+                      <tr id="linha-comprovante">
+                        <th>Comprovante de Pagamento</th>
+                        <td id="conteudo-comprovante">
+                            <a href="#" target="_blank" id="url_comprovante_pagamento">Visualizar Comprovante</a>
+                        </td>
+                      </tr>
+                  </tbody>
+              </table>
+
+              <form id="form-comprovante" enctype="multipart/form-data">
+                  <h6>Enviar comprovante de Pagamento</h6>
+                  <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>Comprovante</th>
+                            <td>
+                                <input type="file" class="form-control" id="input-comprovante" name="comprovante" required>
+                            </td>
+                        </tr>
+                    </tbody>
+                  </table>
+              </form>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary">Salvar Comprovante</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+              </div>
+          </div>
       </div>
-    </div>
   </div>
+</div>

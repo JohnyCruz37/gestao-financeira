@@ -46,4 +46,16 @@ class ContasManager:
             db.session.commit()
             return True, 'Status atualizado com sucesso'
         return False, 'Conta não encontrada'
+    
+    @classmethod
+    def get_contas_by_vencimento(cls, data_vencimento):
+        return ContaAPagar.query.filter_by(vencimento=data_vencimento).all()
 
+    @classmethod
+    def update_comprovante_pagamento(cls, conta_id, comprovante_pagamento):
+        conta = ContaAPagar.query.get(conta_id)
+        if conta:
+            conta.url_comprovante_pagamento = comprovante_pagamento
+            db.session.commit()
+            return True
+        return False

@@ -1,3 +1,4 @@
+from datetime import date
 from flask import request, jsonify
 from flask_login import login_required, current_user
 from app.routes.apis import apis
@@ -6,6 +7,7 @@ from app.models.conta_a_pagar import ContaAPagar
 from app.models.contasManager import ContasManager
 from app.models.empresaManager import EmpresaManager
 from app.models.UserManager import UserManager
+from app.utils.filtrar_por_vencimento import filtrar_por_vencimento
 
 @apis.route('/conta-a-pagar', methods=['POST'])
 @login_required
@@ -14,6 +16,7 @@ def post_conta_a_pagar():
     if current_user.tipo_acesso != 'gerente':
         return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
     data = request.get_json()
+    print(data.get('vencimento'))
     sucesso, msg = ContaAPagar.add_conta(**data)
     if sucesso:
         return jsonify({'message': msg}), 201
@@ -29,7 +32,12 @@ def get_contas_a_pagar():
     elif tipo_acesso_usuario == 'gerente':
         contas = ContasManager.get_contas_id_gerente(current_user.id)
     elif tipo_acesso_usuario == 'financeiro':
+        hoje = date.today()
+        hoje_str = hoje.strftime('%Y-%m-%d')
+        
         contas = ContasManager.get_contas_status('aprovado')
+        por_vencimento = filtrar_por_vencimento(contas, hoje_str)
+        return jsonify(por_vencimento), 200
     
     return jsonify([conta.to_dict() for conta in contas]), 200
 
@@ -39,7 +47,9 @@ def update_conta_a_pagar(id):
     if current_user.tipo_acesso != 'gerente':
         data = request.get_json()
         novo_status = data.get('status')
-
+        if novo_status == 'pago':
+            ContasManager.update_comprovante_pagamento(id, data.get('url_comprovante_pagamento'))
+            
         sucesso, msg = ContasManager.update_status_conta(id, novo_status)
         if sucesso:
             return jsonify({'message': msg}), 200
@@ -95,3 +105,23 @@ def post_imagem_nota_fiscal():
     return jsonify({'caminho': caminho_relativo}), 201
     
 
+@apis.route('/conta-a-pagar/imagem-comprovante-pagamento', methods=['POST'])
+@login_required
+def post_imagem_comprovante_pagamento():
+    if current_user.tipo_acesso != 'financeiro':
+        return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
+    
+    if 'imagem' not in request.files:
+        return jsonify({'message': 'Arquivo de comprovante de pagamento não encontrado'}), 400
+    
+    file = request.files['imagem']
+    if file.filename == '':
+        return jsonify({'message': 'Nome do arquivo vazio'}), 400
+    
+    financeiro_id = current_user.id
+
+    try:
+        caminho_relativo = ContaAPagar.post_image_comprovante(file, financeiro_id)
+        return jsonify({'caminho': caminho_relativo}), 201
+    except Exception as e:
+        return jsonify({'message': 'Erro ao salvar o arquivo', 'error': str(e)}), 500

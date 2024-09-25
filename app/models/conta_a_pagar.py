@@ -52,6 +52,23 @@ class ContaAPagar(db.Model):
 
         return os.path.relpath(caminho_completo, current_app.config['UPLOAD_FOLDER'])
     
+
+    def post_image_comprovante(file, financeiro_id):
+        diretorio = os.path.join(current_app.config['UPLOAD_FOLDER'], 'comprovantes_pagamentos_uploads', str(financeiro_id))
+        
+        if not os.path.exists(diretorio):
+            os.makedirs(diretorio)
+        
+        filename = secure_filename(file.filename)
+        caminho_completo = os.path.join(diretorio, filename)
+
+        file.save(caminho_completo)
+
+        return os.path.relpath(caminho_completo, current_app.config['UPLOAD_FOLDER_COMPROVANTES'])
+
+
+
+
     @staticmethod
     def add_conta(**kwargs):
         lista_obrigatorios = ['id_gerente', 'id_empresa', 'numero_nota', 'valor', 'fornecedor', 'vencimento', 'forma_pagamento', 'url_nota_fiscal', ]

@@ -1,0 +1,19 @@
+.main-pagina-principal{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 100%;
+
+}
+
+.main-pagina-principal h1{
+    margin-bottom: 1rem;
+}
+
+#container-tabela{
+    margin-top: 0;
+    flex: 1 1 0;
+    overflow-y: auto;
+
+}
