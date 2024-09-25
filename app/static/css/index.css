@@ -32,3 +32,8 @@ body, html{
 .bi.bi-question-circle{
     cursor: pointer;
 }
+
+
+.confir-acao::after {
+    display: none;
+}

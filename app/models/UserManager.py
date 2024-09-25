@@ -32,8 +32,9 @@ class UserManager:
         if not user:
             return None, 'Usuário não encontrado'
         
-        if 'email' in data and User.query.filter_by(email=data['email']).first():
-            return None, 'Email já cadastrado'
+        if 'email' in data and data['email']!= user.email:
+            if User.query.filter_by(email=data['email']).first():
+                return None, 'Email já cadastrado'
 
         try:
             allowed_updates = ['nome', 'sobrenome', 'celular', 'email', 'tipo_acesso', 'id_empresa']

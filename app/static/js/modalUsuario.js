@@ -1,8 +1,8 @@
-import { populateSelect } from "./populateEmpresas.js";
 import AlertaJs from "./alertaJs.js";
 import populateTableEmpresasGerentes from "./populateTableEmpresasGerentes.js";
 import { desabilitarForm } from "./utils.js";
 import { habilitarForm } from "./utils.js";
+import { monitorarInputs } from "./formUsuario.js";
 export function openModalUsuarios(user, empresas) {
     const form = document.getElementById('form-usuario-edicao');
     populateFormUsuarioEdicao(form, user, empresas);
@@ -17,20 +17,6 @@ async function populateFormUsuarioEdicao(form, user, empresas) {
     form.querySelector('#celular').value = user.celular;
     const selectTipoAcesso = form.querySelector('#tipoAcesso');
     selectTipoAcesso.value = user.tipo_acesso;
-    await populateSelect('select-empresa-modal');
-    const selectEmpresa = form.querySelector('#select-empresa-modal');
-    if (selectEmpresa) {
-        if (user.empresa && !Array.from(selectEmpresa.options).some(option => option.value === user.empresa?.id.toString())) {
-            const newOption = document.createElement('option');
-            newOption.value = user.empresa.id.toString();
-            newOption.text = user.empresa.razao_social;
-            selectEmpresa.appendChild(newOption);
-        }
-        selectEmpresa.value = user.empresa?.id.toString() || '';
-    }
-    else {
-        console.error('Elemento select-empresa não encontrado no formulário.');
-    }
     const btnEditar = form.querySelector('#btn-editar-usuario');
     const btnSalvar = form.querySelector('#btn-salvar-usuario');
     const btnExcluir = form.querySelector('#confirm-excluir-sim-usuario');
@@ -47,6 +33,10 @@ function resetarForm(form, btn, user, empresas) {
     form.reset();
 }
 function salvarEdicaoUsuario(user, form, btn, empresas) {
+    const listInput = ['nome', 'sobrenome', 'email', 'celular'];
+    listInput.forEach((inputId) => {
+        monitorarInputs(form, inputId);
+    });
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     const updatedUser = {
@@ -64,8 +54,10 @@ function salvarEdicaoUsuario(user, form, btn, empresas) {
             updatedUser.empresa = empresaSelecionada;
         }
     }
-    fetchSalvarEdicaoUsuario(updatedUser);
-    desabilitarForm(form, btn);
+    if (form.querySelectorAll('.is-invalid').length === 0) {
+        fetchSalvarEdicaoUsuario(updatedUser);
+        desabilitarForm(form, btn);
+    }
 }
 async function fetchSalvarEdicaoUsuario(updatedUser) {
     try {

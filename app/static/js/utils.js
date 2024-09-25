@@ -1,9 +1,11 @@
 export function habilitarForm(form, btn) {
     const inputs = form.querySelectorAll('input, select');
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
         if (input.id !== 'id') {
             if (input.id !== 'cnpj') {
-                input.disabled = false;
+                if (input.id !== 'tipoAcesso') {
+                    input.disabled = false;
+                }
             }
         }
     });

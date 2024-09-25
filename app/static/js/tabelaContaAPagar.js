@@ -37,10 +37,41 @@ async function populateTableContas(listacontas, tipoAcesso) {
             const rows = listacontas.map(conta => {
                 let buttons = '';
                 if (tipoAcesso.trim() === 'admin' && conta.status.trim() === 'pendente') {
-                    buttons += `<button class="btn btn-outline-secondary btn-sm btn-aprovar" data-id-conta="${conta.id}"> Aprovar </button>`;
+                    buttons += `
+                    <div class="area-btn-aprovar">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-success dropdown-toggle confir-acao" id="btn-aprovar" data-bs-toggle="dropdown" aria-expanded="false">
+                                Aprovar
+                            </button>
+                            <ul class="dropdown-menu p-3" id="confirm-aprovar">
+                                <li class="text-center mb-2">Quer mesmo confirmar esse pagamento?</li>
+                                <li class="text-center">
+                                    <button class="btn btn-sm btn-success me-2 confirm-aprovar-sim" id="confirm-aprovar-sim" data-id-conta="${conta.id}">SIM</button>
+                                    <button type="button" class="btn btn-sm btn-secondary" id="confirm-aprovar-nao">NÃO</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    `;
                 }
                 if (tipoAcesso.trim() === 'financeiro' && conta.status.trim() === 'aprovado') {
-                    buttons += `<button class="btn btn-outline-secondary btn-sm btn-pago" data-id-conta="${conta.id}"> Confirmar Pagamento </button>`;
+                    buttons += `
+                        <div class="area-btn-pago">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-success dropdown-toggle confir-acao" id="btn-pago" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Pago
+                                </button>
+                                <ul class="dropdown-menu p-3" id="confirm-aprovar">
+                                    <li class="text-center mb-2">Quer mesmo confirmar o pagamento desta conta?</li>
+                                    <li class="text-center">
+                                        <button class="btn btn-sm btn-success me-2 confirm-pago-sim" id="confirm-pago-sim" data-id-conta="${conta.id}">SIM</button>
+                                        <button type="button" class="btn btn-sm btn-secondary" id="confirm-pago-nao">NÃO</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    
+                    `;
                 }
                 return `
                     <tr>
@@ -53,7 +84,7 @@ async function populateTableContas(listacontas, tipoAcesso) {
                     conta.status.trim() === 'pago' ? '<span class="badge bg-primary">Pago</span>' :
                         `<span class="badge bg-success">Aprovado</span>`}
                         </td>
-                        <td>
+                        <td class="d-flex">
                             <button class="btn btn-primary btn-sm btn-detalhes-conta" data-id-conta="${conta.id}"> Detalhes </button>
                             ${buttons}
                         </td>
@@ -63,7 +94,7 @@ async function populateTableContas(listacontas, tipoAcesso) {
             tbody.innerHTML = rows;
         }
     }
-    const btnsAprovar = document.querySelectorAll('.btn-aprovar');
+    const btnsAprovar = document.querySelectorAll('.confirm-aprovar-sim');
     btnsAprovar.forEach(btnAprovar => {
         btnAprovar.addEventListener('click', () => {
             const idConta = btnAprovar.getAttribute('data-id-conta');
@@ -72,7 +103,7 @@ async function populateTableContas(listacontas, tipoAcesso) {
             }
         });
     });
-    const btnsPago = document.querySelectorAll('.btn-pago');
+    const btnsPago = document.querySelectorAll('.confirm-pago-sim');
     btnsPago.forEach(btnPago => {
         btnPago.addEventListener('click', () => {
             const idConta = btnPago.getAttribute('data-id-conta');
@@ -116,5 +147,5 @@ async function detalhesConta(id) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
     const conta = await response.json();
-    openModalDetalhesConta(conta);
+    openModalDetalhesConta(conta, id);
 }

@@ -2,6 +2,7 @@ import { desabilitarForm } from "./utils.js";
 import { habilitarForm } from "./utils.js";
 import AlertaJs from "./alertaJs.js";
 import { populateTableEmpresas } from "./populateEmpresas.js";
+import { monitorarInputs } from "./formUsuario.js";
 export function openModalEmpresas(empresa) {
     const form = document.getElementById('form-empresa-edicao');
     populateFormEmpresaEdicao(form, empresa);
@@ -20,13 +21,14 @@ export default function populateFormEmpresaEdicao(form, empresa) {
     btnEditar.addEventListener('click', () => habilitarForm(form, btnSalvar));
     btnSalvar.addEventListener('click', () => salvarEdicaoEmpresa(form, btnSalvar, empresa));
     btnExcluir.addEventListener('click', () => fetchExcluirEmpresa(empresa.id));
-    document.getElementById('modalEmpresas').addEventListener('hidden.bs.modal', () => resetarForm(form, btnSalvar, empresa));
+    document.getElementById('modalEmpresas').addEventListener('hidden.bs.modal', () => resetarForm(form, btnSalvar, empresa)); // não está funcionando
 }
 function resetarForm(form, btn, empresas) {
     btn.removeEventListener('click', () => salvarEdicaoEmpresa(form, btn, empresas));
     form.reset();
 }
 function salvarEdicaoEmpresa(form, btn, empresa) {
+    monitorarInputs(form, 'razao-social');
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     const updatedEmpresa = {
@@ -34,8 +36,11 @@ function salvarEdicaoEmpresa(form, btn, empresa) {
         razao_social: data.razao_social,
         cnpj: data.cnpj
     };
-    fetchSalvarEdicaoEmpresa(updatedEmpresa);
-    desabilitarForm(form, btn);
+    if (form.querySelectorAll('.is-invalid').length === 0) {
+        console.log(JSON.stringify(updatedEmpresa));
+        fetchSalvarEdicaoEmpresa(updatedEmpresa);
+        desabilitarForm(form, btn);
+    }
 }
 async function fetchSalvarEdicaoEmpresa(updateEmpresa) {
     try {
