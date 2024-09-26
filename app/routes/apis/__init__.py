@@ -18,3 +18,5 @@ from .contas_a_pagar import post_conta_a_pagar,\
                             get_contas_a_pagar,\
                             update_conta_a_pagar,\
                             post_imagem_comprovante_pagamento
+
+from .contas_pagas import get_contas_pagas

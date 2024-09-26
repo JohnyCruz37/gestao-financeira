@@ -1,11 +1,31 @@
-<aside class="aside col-2 full-height bloco-shadow">
-    <a class="nav-link" href="{{url_for('pages.pagina_inicial')}}"><i class="bi bi-box-arrow-right"></i> Página Inicial</a>
-    {% if current_user.tipo_acesso == 'admin' %}
-        <a class="nav-link" href="{{url_for('pages.empresas')}}"><i class="bi bi-box-arrow-right"></i> Empresas</a>
-    {% endif %}
-    {% if current_user.tipo_acesso == 'gerente' %}
-        <a class="nav-link" href="{{ url_for('pages.lancar_conta', id_gerente=current_user.id, id_empresa=current_user.id_empresa) }}"><i class="bi bi-box-arrow-right"></i> Lançar Conta</a>
-    {% endif %}
-    
-    <a class="nav-link" href="{{url_for('pages.logout')}}"><i class="bi bi-box-arrow-right"></i> sair</a>
+<aside class="aside col-2 full-height bloco-shadow d-flex flex-column justify-content-between">
+
+    <div class="text-center p-3">
+        <img src="{{url_for('static', filename='image/perfil.png')}}" class="img-fluid rounded-circle" alt="User Image" />
+    </div>
+
+    <nav class="nav flex-column p-3">
+        <a class="nav-link" href="{{url_for('pages.pagina_inicial')}}">
+            <i class="bi bi-house-door"></i> Página Inicial
+        </a>
+        {% if current_user.tipo_acesso == 'admin' %}
+            <a class="nav-link" href="{{url_for('pages.empresas')}}">
+                <i class="bi bi-building"></i> Empresas
+            </a>
+            <a class="nav-link" href="{{url_for('pages.contas_pagas')}}">
+                <i class="bi bi-check-square"></i> Contas Pagas
+            </a>
+        {% endif %}
+        {% if current_user.tipo_acesso == 'gerente' %}
+            <a class="nav-link" href="{{ url_for('pages.lancar_conta', id_gerente=current_user.id, id_empresa=current_user.id_empresa) }}">
+                <i class="bi bi-pencil-square"></i> Lançar Conta
+            </a>
+        {% endif %}
+    </nav>
+
+    <div class="p-3">
+        <a class="nav-link" href="{{url_for('pages.logout')}}">
+            <i class="bi bi-box-arrow-right"></i> Sair
+        </a>
+    </div>
 </aside>

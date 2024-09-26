@@ -3,10 +3,16 @@ from flask_login import login_required
 import os
 from app.routes.pages import pages
 
-@pages.route('/uploads/<path:filename>')
+ALLOWED_DIRS = ['notas_fiscais_uploads', 'comprovantes_pagamentos_uploads']
+
+@pages.route('/uploads/<path:directory>/<path:filename>')
 @login_required
-def serve_image(filename):
-    uploads_dir = os.path.join(current_app.root_path, 'notas_fiscais_uploads')
+def serve_image(directory, filename):
+    if directory not in ALLOWED_DIRS:
+        return 'Diretório não permitido', 403
+
+
+    uploads_dir = os.path.join(current_app.root_path, directory)
 
     full_path = os.path.join(uploads_dir, filename)
 

@@ -35,8 +35,12 @@ function formatValue(key, value, id) {
         return `R$ ${value.toFixed(2)}`;
     }
     if (key === 'url_nota_fiscal') {
-        const baseUrl = '/uploads';
+        const baseUrl = '/uploads/notas_fiscais_uploads';
         return `<a href="${baseUrl}/${value.replace(/\\/g, '/')}" target="_blank">Nota Fiscal</a>`;
+    }
+    if (key === 'url_comprovante_pagamento') {
+        const baseUrl = '/uploads/comprovantes_pagamentos_uploads';
+        return `<a href="${baseUrl}/${value.replace(/\\/g, '/')}" target="_blank">Comprovante de Pagamento</a>`;
     }
     if (key === 'status') {
         if (value === 'pendente') {

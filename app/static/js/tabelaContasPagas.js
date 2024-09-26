@@ -1,22 +1,19 @@
 import AlertaJs from "./alertaJs.js";
-import openModalDetalhesConta from "./modalDetalhesConta.js";
+import { detalhesConta } from "./tabelaContaAPagar.js";
 import { formatarData, verificarVencimento } from "./utils.js";
 document.addEventListener('DOMContentLoaded', async () => {
     const tipoAcesso = document.getElementById('tipo-acesso').textContent;
     if (tipoAcesso) {
-        apresentarListaContas(tipoAcesso);
+        await apresentarListaContasPagas(tipoAcesso);
     }
 });
-export async function apresentarListaContas(tipoAcesso) {
-    const lista = await fetchContasAPagar();
-    const tbody = document.querySelector('tbody');
-    if (tbody && tbody !== null) {
-        await populateTableContas(tbody, lista, tipoAcesso);
-    }
+async function apresentarListaContasPagas(tipoAcesso) {
+    const lista = await fetchContasPagas();
+    await populateTableContasPagas(lista, tipoAcesso);
 }
-async function fetchContasAPagar() {
+async function fetchContasPagas() {
     try {
-        const response = await fetch('/api/conta-a-pagar');
+        const response = await fetch('/api/contas-pagas');
         if (!response.ok) {
             AlertaJs.showAlert('Não foi possível carregar as contas a pagar', 'danger');
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -28,7 +25,8 @@ async function fetchContasAPagar() {
         throw error;
     }
 }
-export async function populateTableContas(tbody, listacontas, tipoAcesso) {
+export async function populateTableContasPagas(listacontas, tipoAcesso) {
+    const tbody = document.querySelector('tbody');
     if (tbody) {
         if (listacontas.length === 0) {
             tbody.innerHTML = '<tr><td colspan="6">Nenhuma conta a pagar encontrada.</td></tr>';
@@ -67,13 +65,4 @@ export async function populateTableContas(tbody, listacontas, tipoAcesso) {
             }
         });
     });
-}
-export async function detalhesConta(id, tipoAcesso) {
-    const response = await fetch(`/api/conta-a-pagar/${id});`);
-    if (!response.ok) {
-        AlertaJs.showAlert('Não foi possível carregar a conta a pagar', 'danger');
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const conta = await response.json();
-    openModalDetalhesConta(conta, id, tipoAcesso);
 }

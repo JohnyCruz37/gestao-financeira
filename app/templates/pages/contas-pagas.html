@@ -1,0 +1,18 @@
+{% extends 'pages/base-app.html' %}
+
+{% block titulo %}
+    Contas pagas
+{% endblock %}
+
+{% block main %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/pagina-principal.css')}}">
+
+    <div class="main-pagina-principal">
+        <h1>Lista de contas pagas</h1>
+        {% include "includes/tabela-contas-pagas.html" %}
+    </div>
+{% endblock %}
+
+{% block scriptBaseApp %}
+    <script type="module" src="{{url_for('static', filename='js/tabelaContasPagas.js')}}"></script>
+{% endblock %}

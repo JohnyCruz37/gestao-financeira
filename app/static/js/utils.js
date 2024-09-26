@@ -20,3 +20,13 @@ export function desabilitarForm(form, btn) {
     });
     btn.style.display = 'none';
 }
+export function formatarData(dataISO) {
+    const [ano, mes, dia] = dataISO.split('-');
+    return `${dia}/${mes}/${ano}`;
+}
+export function verificarVencimento(dataISO) {
+    const hoje = new Date();
+    const vencimento = new Date(dataISO);
+    hoje.setHours(0, 0, 0, 0);
+    return vencimento <= hoje;
+}

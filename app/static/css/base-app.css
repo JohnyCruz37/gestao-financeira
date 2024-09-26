@@ -22,3 +22,39 @@
 .header.bloco{
     border-radius: 0;
 }
+
+
+
+
+/* aside */
+.aside {
+    background-color: #f8f9fa; 
+    border-right: 1px solid #ddd; 
+    padding-top: 20px;
+}
+
+.aside img {
+    max-width: 9rem;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.nav-link {
+    font-size: 16px;
+    color: #333;
+    padding: 10px 0;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    background-color: #e9ecef;
+    border-radius: 5px;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.bloco-shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
