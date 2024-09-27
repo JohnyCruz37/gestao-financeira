@@ -40,7 +40,7 @@ class ContaAPagar(db.Model):
         return conta_dict
 
     def post_image_nota(file, gerente_id, empresa_id):
-        diretorio = os.path.join(current_app.config['UPLOAD_FOLDER'], 'notas_fiscais_uploads', str(gerente_id), str(empresa_id))
+        diretorio = os.path.join(current_app.config['UPLOAD_FOLDER'], 'notas_fiscais_uploads', str(empresa_id), str(gerente_id))
 
         if not os.path.exists(diretorio):
             os.makedirs(diretorio)
@@ -51,10 +51,11 @@ class ContaAPagar(db.Model):
         file.save(caminho_completo)
 
         return os.path.relpath(caminho_completo, current_app.config['UPLOAD_FOLDER'])
+
     
 
     def post_image_comprovante(file, financeiro_id):
-        diretorio = os.path.join(current_app.config['UPLOAD_FOLDER'], 'comprovantes_pagamentos_uploads', str(financeiro_id))
+        diretorio = os.path.join(current_app.config['UPLOAD_FOLDER_COMPROVANTES'], 'comprovantes_pagamentos_uploads', str(financeiro_id))
         
         if not os.path.exists(diretorio):
             os.makedirs(diretorio)

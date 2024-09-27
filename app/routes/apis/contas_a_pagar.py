@@ -16,7 +16,6 @@ def post_conta_a_pagar():
     if current_user.tipo_acesso != 'gerente':
         return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
     data = request.get_json()
-    print(data.get('vencimento'))
     sucesso, msg = ContaAPagar.add_conta(**data)
     if sucesso:
         return jsonify({'message': msg}), 201

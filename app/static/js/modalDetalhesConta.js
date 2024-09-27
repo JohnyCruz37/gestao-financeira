@@ -23,7 +23,6 @@ function populateDetalhesConta(conta, id, tipoAcesso) {
             }
         }
     });
-    validarComprovanteExiste(conta);
     validarFormComprovante(tipoAcesso);
     tratarSubmissaoForm(tipoAcesso, conta);
 }
@@ -36,11 +35,15 @@ function formatValue(key, value, id) {
     }
     if (key === 'url_nota_fiscal') {
         const baseUrl = '/uploads/notas_fiscais_uploads';
-        return `<a href="${baseUrl}/${value.replace(/\\/g, '/')}" target="_blank">Nota Fiscal</a>`;
+        // Normalizar o caminho: substituir \ por / e remover ..\
+        const normalizedPath = encodeURIComponent(value.replace(/\\/g, '/').replace(/\.\.\//g, ''));
+        return `<a href="${baseUrl}/${normalizedPath}" target="_blank">Visualizar Nota Fiscal</a>`;
     }
-    if (key === 'url_comprovante_pagamento') {
+    if (key === 'url_comprovante_pagamento' || key === 'url_nota_fiscal') {
         const baseUrl = '/uploads/comprovantes_pagamentos_uploads';
-        return `<a href="${baseUrl}/${value.replace(/\\/g, '/')}" target="_blank">Comprovante de Pagamento</a>`;
+        // Substitui todas as barras invertidas por barras normais
+        const normalizedPath = value.replace(/\\/g, '/'); // Corrige barras invertidas
+        return `<a href="${baseUrl}/${normalizedPath}" target="_blank">Visualizar Comprovante</a>`;
     }
     if (key === 'status') {
         if (value === 'pendente') {
@@ -54,16 +57,6 @@ function formatValue(key, value, id) {
         }
     }
     return value.toString();
-}
-function validarComprovanteExiste(conta) {
-    const url = conta.url_comprovante_pagamento;
-    const linhaComprovante = document.getElementById('conteudo-comprovante');
-    if (url) {
-        linhaComprovante.innerHTML = `<a href="${url}" target="_blank">Visualizar Comprovante</a>`;
-    }
-    else {
-        linhaComprovante.innerHTML = 'Nenhum comprovante disponível';
-    }
 }
 function validarFormComprovante(tipoAcesso) {
     const form = document.getElementById('form-comprovante');
