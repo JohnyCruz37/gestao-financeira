@@ -1,5 +1,5 @@
-from flask import render_template, redirect, url_for
-from flask_login import login_required, current_user
+from flask import render_template
+from flask_login import login_required
 from app.routes.pages import pages
 from app.decorators.require_access_level import require_any_access_level
 

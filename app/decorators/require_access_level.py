@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import redirect, url_for, request, flash
+from flask import redirect, url_for, flash
 from flask_login import current_user
 
 def require_any_access_level(*required_access_levels):

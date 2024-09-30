@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 export async function apresentarListaContas(tipoAcesso) {
     const lista = await fetchContasAPagar();
-    const tbody = document.querySelector('tbody');
+    const tbody = document.getElementById('tbody-contas-a-pagar');
     if (tbody && tbody !== null) {
         await populateTableContas(tbody, lista, tipoAcesso);
     }

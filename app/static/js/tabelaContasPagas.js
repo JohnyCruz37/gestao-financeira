@@ -9,7 +9,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 async function apresentarListaContasPagas(tipoAcesso) {
     const lista = await fetchContasPagas();
-    await populateTableContasPagas(lista, tipoAcesso);
+    const tbody = document.getElementById('tbody-contas-pagas');
+    console.log(tbody);
+    if (tbody && tbody !== null) {
+        await populateTableContasPagas(lista, tipoAcesso, tbody);
+    }
+    else {
+        console.error('Elemento tbody não encontrado');
+        AlertaJs.showAlert('Recarregue a página para visualizar as contas.', 'warning');
+    }
 }
 async function fetchContasPagas() {
     try {
@@ -25,36 +33,42 @@ async function fetchContasPagas() {
         throw error;
     }
 }
-export async function populateTableContasPagas(listacontas, tipoAcesso) {
-    const tbody = document.querySelector('tbody');
-    if (tbody) {
-        if (listacontas.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6">Nenhuma conta a pagar encontrada.</td></tr>';
-            return;
-        }
-        else {
-            const rows = listacontas.map(conta => {
-                return `
-                    <tr>
-                        <td>${conta.numero_nota}</td>
-                        <td>${conta.valor.toFixed(2)}</td>
-                        <td>${conta.forma_pagamento}</td>
-                        <td>
-                            ${verificarVencimento(conta.vencimento) ? `<span class="badge bg-danger">${formatarData(conta.vencimento)}</span>` : formatarData(conta.vencimento)}
-                        </td>
-                        <td>
-                            ${conta.status.trim() === 'pendente' ? `<span class="badge bg-warning">Pendente</span>` :
-                    conta.status.trim() === 'pago' ? '<span class="badge bg-primary">Pago</span>' :
-                        `<span class="badge bg-success">Aprovado</span>`}
-                        </td>
-                        <td class="d-flex">
-                            <button class="btn btn-primary btn-sm btn-detalhes-conta" data-id-conta="${conta.id}"> Detalhes </button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-            tbody.innerHTML = rows;
-        }
+export async function populateTableContasPagas(listacontas, tipoAcesso, tbody) {
+    console.info(`listacontas entrou com o tamanho: ${listacontas.length}`);
+    if (!tbody) {
+        console.error('Elemento tbody não encontrado');
+        AlertaJs.showAlert('Recarregue a página para visualizar as contas.', 'warning');
+        return;
+    }
+    if (listacontas.length === 0) {
+        console.info(`O valor de listacontas é um array vazio`);
+        tbody.innerHTML = '<tr><td colspan="6">Nenhuma conta a pagar encontrada.</td></tr>';
+        return;
+    }
+    else {
+        console.info(`O valor de listacontas não é um array vazio`);
+        console.info(`o valor de listacontas tem ${listacontas.length} elementos`);
+        const rows = listacontas.map(conta => {
+            return `
+                <tr>
+                    <td>${conta.numero_nota}</td>
+                    <td>${conta.valor.toFixed(2)}</td>
+                    <td>${conta.forma_pagamento}</td>
+                    <td>
+                        ${verificarVencimento(conta.vencimento) ? `<span class="badge bg-danger">${formatarData(conta.vencimento)}</span>` : formatarData(conta.vencimento)}
+                    </td>
+                    <td>
+                        ${conta.status.trim() === 'pendente' ? `<span class="badge bg-warning">Pendente</span>` :
+                conta.status.trim() === 'pago' ? '<span class="badge bg-primary">Pago</span>' :
+                    `<span class="badge bg-success">Aprovado</span>`}
+                    </td>
+                    <td class="d-flex">
+                        <button class="btn btn-primary btn-sm btn-detalhes-conta" data-id-conta="${conta.id}"> Detalhes </button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+        tbody.innerHTML = rows;
     }
     const btnsDetalhe = document.querySelectorAll('.btn-detalhes-conta');
     btnsDetalhe.forEach(btnDetalhe => {
