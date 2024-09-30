@@ -20,6 +20,9 @@ class ValidadorInput {
         else if (this.inputElement.id === 'senha' || this.inputElement.id === 'password') {
             this.validador = new InputSenha(this.inputElement);
         }
+        else if (this.inputElement.id === 'valor') {
+            this.validador = new InputValor(this.inputElement);
+        }
     }
     validar() {
         if (this.validador) {
@@ -188,6 +191,40 @@ class InputSenha {
         const letraMaiuscula = /[A-Z]/.test(valor);
         const letraMinuscula = /[a-z]/.test(valor);
         return tamanhovalido && numero && letraMaiuscula && letraMinuscula;
+    }
+}
+class InputValor {
+    constructor(input) {
+        this.valorNumerico = 0;
+        this.inputElement = input;
+        this.inputElement.value = "R$ 000,00";
+        this.aplicarMascara();
+    }
+    aplicarMascara() {
+        this.inputElement.addEventListener('input', () => {
+            let valor = this.inputElement.value.replace(/\D/g, '');
+            if (valor.length === 0) {
+                this.valorNumerico = 0;
+                this.inputElement.value = "R$ 000,00";
+                this.inputElement.dataset.valor = this.valorNumerico.toFixed(2);
+                return;
+            }
+            valor = (parseInt(valor) / 100).toFixed(2).replace('.', ',');
+            valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            this.inputElement.value = `R$ ${valor}`;
+            let valorSemMascara = this.inputElement.value.replace(/[R$\s.]/g, '').replace(',', '.');
+            this.valorNumerico = parseFloat(valorSemMascara);
+            this.inputElement.dataset.valor = this.valorNumerico.toFixed(2);
+        });
+    }
+    validar() {
+        return this.valorNumerico > 0;
+    }
+    getMensagemErro() {
+        if (!this.validar()) {
+            return 'Deve preencher o valor.';
+        }
+        return '';
     }
 }
 export default ValidadorInput;

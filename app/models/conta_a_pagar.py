@@ -52,8 +52,6 @@ class ContaAPagar(db.Model):
 
         return os.path.relpath(caminho_completo, current_app.config['UPLOAD_FOLDER'])
 
-    
-
     def post_image_comprovante(file, financeiro_id):
         diretorio = os.path.join(current_app.config['UPLOAD_FOLDER_COMPROVANTES'], 'comprovantes_pagamentos_uploads', str(financeiro_id))
         
@@ -64,11 +62,7 @@ class ContaAPagar(db.Model):
         caminho_completo = os.path.join(diretorio, filename)
 
         file.save(caminho_completo)
-
         return os.path.relpath(caminho_completo, current_app.config['UPLOAD_FOLDER_COMPROVANTES'])
-
-
-
 
     @staticmethod
     def add_conta(**kwargs):

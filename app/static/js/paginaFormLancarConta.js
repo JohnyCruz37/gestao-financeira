@@ -1,7 +1,12 @@
 import AlertaJs from "./alertaJs.js";
+import ValidadorInput from "./validadorInputs.js";
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('notaForm');
     const btnLimpar = document.getElementById('limparFormulario');
+    const inputValor = document.getElementById('valor');
+    if (inputValor) {
+        new ValidadorInput(inputValor);
+    }
     form.addEventListener('submit', async function (event) {
         event.preventDefault();
         const imgDaNota = document.getElementById('notaFiscal');
@@ -16,7 +21,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const formDataObj = new FormData(this);
             const data = Object.fromEntries(formDataObj.entries());
             const vencicmento = document.getElementById('vencimento').value;
-            data['vencimento'] = vencicmento;
+            if (vencicmento && vencicmento.trim() !== '') {
+                data['vencimento'] = vencicmento;
+            }
+            else {
+                AlertaJs.showAlert('Vencimento não pode ser vazio', 'warning');
+                return;
+            }
+            const valor = document.getElementById('valor');
+            if (valor && valor.value.trim() !== '' && valor !== null) {
+                const dataValor = valor.getAttribute('data-valor')?.toString();
+                if (dataValor && dataValor !== '') {
+                    data['valor'] = dataValor;
+                }
+            }
+            else {
+                AlertaJs.showAlert('Valor não pode ser vazio', 'warning');
+                return;
+            }
             data['url_nota_fiscal'] = caminhoImagem;
             await salvarNota(data);
             AlertaJs.showAlert('Nota salva com sucesso!', 'success');
