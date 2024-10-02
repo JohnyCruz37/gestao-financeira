@@ -12,6 +12,8 @@
                         <label for="id" class="form-label">ID</label>
                         <input type="text" class="form-control" id="id" disabled>
                     </div>
+
+                    <!-- CNPJ -->
                     <div class="mb-3">
                         <div class="form-floating mb-1">
                             <input placeholder="CNPJ" type="text" class="form-control" id="cnpj" name="cnpj" required disabled>
@@ -19,6 +21,8 @@
                         </div>
                         <div id="cnpjFeedback" class="invalid-feedback"></div>
                     </div>
+
+                    <!-- Razão Social -->
                     <div class="mb-3">
                         <div class="form-floating mb-1">
                             <input placeholder="Razão Social" type="text" class="form-control" id="razao-social" name="razao_social" required disabled>
@@ -26,6 +30,77 @@
                         </div>
                         <div id="razao-socialFeedback" class="invalid-feedback"></div>
                     </div>
+
+                    <!-- Rua e Número -->
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="form-floating mb-1">
+                                <input placeholder="Rua" type="text" class="form-control" id="rua" name="rua" required disabled>
+                                <label for="rua">Rua</label>
+                            </div>
+                            <div id="ruaFeedback" class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-floating mb-1">
+                                <input placeholder="Número" type="text" class="form-control" id="numero" name="numero" required disabled>
+                                <label for="numero">Número</label>
+                            </div>
+                            <div id="numeroFeedback" class="invalid-feedback"></div>
+                        </div>
+                    </div>
+
+                    <!-- Bairro e Complemento -->
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-floating mb-1">
+                                <input placeholder="Bairro" type="text" class="form-control" id="bairro" name="bairro" required disabled>
+                                <label for="bairro">Bairro</label>
+                            </div>
+                            <div id="bairroFeedback" class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-floating mb-1">
+                                <input placeholder="Complemento" type="text" class="form-control" id="complemento" name="complemento" disabled>
+                                <label for="complemento">Complemento</label>
+                            </div>
+                            <div id="complementoFeedback" class="invalid-feedback"></div>
+                        </div>
+                    </div>
+
+                    <!-- Cidade -->
+                    <div class="mb-3">
+                        <div class="form-floating mb-1">
+                            <input placeholder="Cidade" type="text" class="form-control" id="cidade" name="cidade" required disabled>
+                            <label for="cidade">Cidade</label>
+                        </div>
+                        <div id="cidadeFeedback" class="invalid-feedback"></div>
+                    </div>
+
+                    <!-- CEP e Estado -->
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-floating mb-1">
+                                <input placeholder="CEP" type="text" class="form-control" id="cep" name="cep" required disabled>
+                                <label for="cep">CEP</label>
+                            </div>
+                            <div id="cepFeedback" class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-7">
+                            <div class="form-floating mb-1">
+                                <input placeholder="Estado" type="text" class="form-control" id="estado" name="estado" required disabled>
+                                <label for="estado">Estado</label>
+                            </div>
+                            <div id="estadoFeedback" class="invalid-feedback"></div>
+                        </div>
+                    </div>
+
+                    <!-- Celular -->
+                    <div class="form-floating mb-1">
+                        <input placeholder="Celular" type="tel" class="form-control" id="celular" name="celular" required disabled>
+                        <label for="celular">Celular</label>
+                    </div>
+                    <div id="celularFeedback" class="invalid-feedback"></div>
+
                 </div>
                 <div class="modal-footer">
                     <div class="area-btn-salvar">

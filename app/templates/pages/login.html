@@ -2,7 +2,7 @@
 
 <!-- titulo da aba -->
 {% block titulo %}
-Login AMAM
+Login AMAN
 {% endblock %}
 
 <!-- conteúdo da página -->
@@ -10,7 +10,10 @@ Login AMAM
 <link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}">
 <section class="section-container container">
         <div class="col-md-6 bloco bloco-shadow bloco-form-login">
-            <h2>Login</h2>
+            <div class="text-center p-3 col-6">
+                <img src="{{url_for('static', filename='image/logo-branco.jpeg')}}" class="img-fluid" alt="User Image" />
+            </div>
+            <h4>Login</h4>
             <form class="form-login" id="form-login">
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>

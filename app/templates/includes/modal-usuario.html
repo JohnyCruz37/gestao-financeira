@@ -54,12 +54,40 @@
                                         <option value="">Tipo de acesso</option>
                                         <option value="admin">Administrativo</option>
                                         <option value="financeiro">Financeiro</option>
-                                        <option value="gerente">Gerente</option>
+                                        <option value="gerente">Representante</option>
                                     </select>
                                     <label for="tipoAcesso">Tipo de Acesso</label>
                                 </div>
                             </div>
                         </div>
+                        <fieldset class="border p-2 mb-2">
+                            <legend class="w-auto text-muted small">
+                                Senha 
+                                <i class="bi bi-question-circle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-html="true"
+                                title="<ul><li>8 caracteres ou mais</li><li>Letras maiúsculas</li><li>Letras minúsculas</li><li>Um número</li><li>Um caractere especial</li></ul>">
+                                </i>
+                            </legend>
+                            <div class="input-group mb-3">
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Senha" required>
+                                    <label for="password">******</label>
+                                </div>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword-password">
+                                    <i class="bi bi-eye-slash"></i>
+                                </button>
+                            </div>
+                            <div id="passwordFeedback" class="invalid-feedback"></div>
+                            <div class="input-group mb-3">
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="password-confirm" name="password-confirm" placeholder="Confirmar Senha" required>
+                                    <label for="password-confirm">******</label>
+                                </div>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword-password-confirm">
+                                    <i class="bi bi-eye-slash"></i>
+                                </button>
+                            </div>
+                            <div id="password-confirmFeedback" class="invalid-feedback"></div>
+                        </fieldset>
                 </div>
                 <div class="modal-footer">
                     <div class="area-btn-salvar">

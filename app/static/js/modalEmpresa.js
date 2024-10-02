@@ -13,6 +13,14 @@ export default function populateFormEmpresaEdicao(form, empresa) {
     form.querySelector('#id').value = empresa.id.toString();
     form.querySelector('#razao-social').value = empresa.razao_social;
     form.querySelector('#cnpj').value = empresa.cnpj;
+    form.querySelector('#rua').value = empresa.rua;
+    form.querySelector('#numero').value = empresa.numero.toString();
+    form.querySelector('#bairro').value = empresa.bairro;
+    form.querySelector('#complemento').value = empresa.complemento;
+    form.querySelector('#cidade').value = empresa.cidade;
+    form.querySelector('#estado').value = empresa.estado;
+    form.querySelector('#cep').value = empresa.cep;
+    form.querySelector('#celular').value = empresa.celular;
     const btnEditar = form.querySelector('#btn-editar-empresa');
     const btnSalvar = form.querySelector('#btn-salvar-empresa');
     const btnExcluir = form.querySelector('#confirm-excluir-sim-empresa');
@@ -34,7 +42,15 @@ function salvarEdicaoEmpresa(form, btn, empresa) {
     const updatedEmpresa = {
         ...empresa,
         razao_social: data.razao_social,
-        cnpj: data.cnpj
+        cnpj: data.cnpj,
+        rua: data.rua,
+        numero: data.numero,
+        bairro: data.bairro,
+        complemento: data.complemento,
+        cidade: data.cidade,
+        estado: data.estado,
+        cep: data.cep,
+        celular: data.celular,
     };
     if (form.querySelectorAll('.is-invalid').length === 0) {
         console.log(JSON.stringify(updatedEmpresa));

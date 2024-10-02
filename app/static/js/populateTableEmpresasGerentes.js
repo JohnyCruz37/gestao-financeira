@@ -27,7 +27,11 @@ export default async function populateTableEmpresasGerentes(id) {
                 </thead>
             `;
             users.forEach(user => {
-                if (user.tipo_acesso === 'gerente' && user.id_empresa) {
+                let isGerente = user.tipo_acesso;
+                if (user.tipo_acesso.trim() === 'gerente') {
+                    isGerente = 'Representante';
+                }
+                else if (user.tipo_acesso.trim() === 'gerente' && user.id_empresa) {
                     const empresa = empresas.find(e => Number(e.id) === user.id_empresa);
                     if (empresa) {
                         user.empresa = {
@@ -41,7 +45,7 @@ export default async function populateTableEmpresasGerentes(id) {
                     <tr>
                         <td>${user.nome} ${user.sobrenome}</td>
                         <td>${user.empresa?.razao_social || '- - - -'}</td>
-                        <td>${user.tipo_acesso}</td>
+                        <td>${isGerente}</td>
                         <td>
                             <button class="btn btn-sm btn-outline-secondary btn-editar-usuario" data-user-id="${user.id}">
                                 <i class="bi bi-pencil-square"></i>

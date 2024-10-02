@@ -22,7 +22,15 @@ class EmpresaManager:
         try:
             empresa = Empresa(
                 cnpj=data['cnpj'],
-                razao_social=data['razao-social']
+                razao_social=data['razao-social'],
+                rua=data['rua'],
+                numero=data['numero'],
+                bairro=data['bairro'],
+                cidade=data['cidade'],
+                complemento=data['complemento'],
+                cep=data['cep'],
+                estado=data['estado'],
+                celular=data['celular'],
             )
             db.session.add(empresa)
             db.session.commit()
@@ -45,7 +53,7 @@ class EmpresaManager:
             return None, 'Empresa não encontrada'
         
         # Atualizar os campos permitidos
-        allowed_updates = ['razao_social']
+        allowed_updates = ['razao_social', 'rua', 'numero', 'bairro', 'cidade', 'complemento', 'cep', 'estado', 'celular']
         for key, value in data.items():
             if key in allowed_updates:
                 setattr(empresa, key, value)

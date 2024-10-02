@@ -1,6 +1,11 @@
 <header class="row main-header">
     <header class="header col-12 p-3 bloco">
         <h6>Bem-vindo <strong>{{current_user.nome}} {{current_user.sobrenome}}  </strong></h6>
-        <small id="tipo-acesso"> {{current_user.tipo_acesso}}  </small> 
+        {% if current_user.tipo_acesso == 'gerente' %}
+                <small id="tipo-acesso"> Representante </small> 
+        {% else %}
+            <small id="tipo-acesso"> {{current_user.tipo_acesso}}  </small> 
+        {% endif %}
+        
     </header>
 </header>
