@@ -3,7 +3,7 @@
         <h6>Bem-vindo <strong>{{current_user.nome}} {{current_user.sobrenome}}  </strong></h6>
         {% if current_user.tipo_acesso == 'gerente' %}
                 <small id="tipo-acesso"> 
-                    Representante
+                    Campo
                 </small>
                 <input type="hidden" id="id_empresa" value="{{current_user.id_empresa}}">
         {% else %}

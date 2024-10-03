@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (tipoAcesso.trim() === 'admin') {
             populateSelect('select-empresa', false);
         }
-        if (tipoAcesso.trim() === 'Representante') {
+        if (tipoAcesso.trim() === 'Campo') {
             const idEmpresa = document.getElementById('id_empresa').value;
             const empresa = await pegarEmpresa(idEmpresa);
             select.innerHTML += `<option value="${empresa?.id}" selected>${empresa?.razao_social}</option>`;

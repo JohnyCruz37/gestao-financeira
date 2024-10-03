@@ -29,7 +29,7 @@ export default async function populateTableEmpresasGerentes(id) {
             users.forEach(user => {
                 let isGerente = user.tipo_acesso;
                 if (user.tipo_acesso.trim() === 'gerente') {
-                    isGerente = 'Representante';
+                    isGerente = 'Campo';
                 }
                 else if (user.tipo_acesso.trim() === 'gerente' && user.id_empresa) {
                     const empresa = empresas.find(e => Number(e.id) === user.id_empresa);
