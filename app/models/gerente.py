@@ -1,6 +1,7 @@
 from app import db
 from sqlalchemy.orm import validates
 from .user import User
+from .empresa import Empresa
 class Gerente(User):
     __mapper_args__ = {
         'polymorphic_identity': 'gerente'
@@ -19,6 +20,13 @@ class Gerente(User):
         if not id_empresa:
             raise ValueError('O Gerente precisa de uma empresa associada.')
         return id_empresa
+    
+    def get_empresa_by_id(self, id_empresa):
+        if self.id_empresa!= id_empresa:
+            return None
+        
+        return Empresa.query.get(id_empresa).to_dict()
+        
 
     def to_dict(self):
         return {

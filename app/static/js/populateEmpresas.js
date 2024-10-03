@@ -1,12 +1,12 @@
 import { openModalEmpresas } from "./modalEmpresa.js";
-export async function populateSelect(id) {
+export async function populateSelect(id, disabled = true) {
     const selectEmpresa = document.getElementById(id);
     selectEmpresa.innerHTML = `<option value="">Selecionar Empresa</option>`;
     try {
-        const empresas = await fetchEmpresas(); // Chama a nova função para buscar as empresas
+        const empresas = await fetchEmpresas();
         selectEmpresa.disabled = false;
         selectEmpresa.innerHTML += empresas.map((empresa) => `<option value="${empresa.id}">${empresa.razao_social}</option>`).join('');
-        selectEmpresa.disabled = true;
+        selectEmpresa.disabled = disabled;
     }
     catch (error) {
         console.error('Erro ao popular o select de empresas:', error);

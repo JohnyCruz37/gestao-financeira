@@ -3,6 +3,12 @@
     <input type="hidden" name="id_empresa" value={{current_user.id_empresa}}>
     <fieldset class="border p-2 mb-2">
         <legend class="w-auto text-muted small">Detalhes da Nota</legend>
+        <div class="form-floating mb-1" >
+            <select class="form-select" id="select-empresa" name="select-empresa" required>
+                <option value="">Selecionar Empresa</option>
+            </select>
+            <label for="select-empresa">Selecinar Empresa</label>
+        </div>
         <div class="form-floating mb-1">
             <input placeholder="Número da nota" type="text" class="form-control" id="numero_nota" name="numero_nota" required>
             <label for="numero_nota">Número da Nota</label>

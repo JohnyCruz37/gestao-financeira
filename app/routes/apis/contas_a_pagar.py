@@ -3,6 +3,7 @@ from flask import request, jsonify
 from flask_login import login_required, current_user
 from app.routes.apis import apis
 from app.decorators.json_required import json_required
+from app.decorators.require_access_level import require_any_access_level
 from app.models.conta_a_pagar import ContaAPagar
 from app.models.contasManager import ContasManager
 from app.models.empresaManager import EmpresaManager
@@ -12,10 +13,28 @@ from app.utils.filtrar_por_vencimento import filtrar_por_vencimento
 @apis.route('/conta-a-pagar', methods=['POST'])
 @login_required
 @json_required
+@require_any_access_level('gerente', 'admin')
 def post_conta_a_pagar():
-    if current_user.tipo_acesso != 'gerente':
-        return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
     data = request.get_json()
+    user = current_user.tipo_acesso
+
+    if 'id_empresa' not in data and user != 'gerente':
+        return jsonify({'message': 'Você precisa informar a empresa.'}), 400
+    
+    if user == 'admin' and 'id_empresa' not in data:
+        return jsonify({'message': 'Você precisa informar a empresa.'}), 400
+    
+    if user != 'gerente' and user != 'admin':
+        return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
+    
+    if user == 'gerente':
+        data['id_empresa'] = current_user.id_empresa
+    
+    if user == 'admin' and 'select-empresa' in data:
+        data['id_empresa'] = data['select-empresa']
+        del data['select-empresa']
+
+
     sucesso, msg = ContaAPagar.add_conta(**data)
     if sucesso:
         return jsonify({'message': msg}), 201
@@ -79,11 +98,10 @@ def get_conta_a_pagar_by_id(id):
         return jsonify({'error': str(e)}), 500
     
 
-@apis.route('/conta-a-pagar/imagem-nota-fiscal', methods=['POST'])
+@apis.route('/conta-a-pagar/imagem-nota-fiscal/<id_empresa>', methods=['POST'])
 @login_required
-def post_imagem_nota_fiscal():
-    if current_user.tipo_acesso != 'gerente':
-        return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
+@require_any_access_level('gerente', 'admin')
+def post_imagem_nota_fiscal(id_empresa):
     
     if 'imagem' not in request.files:
         return jsonify({'message': 'Arquivo de nota fiscal não encontrado'}), 400
@@ -94,10 +112,9 @@ def post_imagem_nota_fiscal():
         return jsonify({'message': 'Nome do arquivo vazio'}), 400
     
     gerente_id = current_user.id
-    empresa_id = current_user.id_empresa
 
     try:
-        caminho_relativo = ContaAPagar.post_image_nota(file, gerente_id, empresa_id)
+        caminho_relativo = ContaAPagar.post_image_nota(file, gerente_id, id_empresa)
     except Exception as e:
         return jsonify({'message': 'Erro ao salvar o arquivo', 'error': str(e)}), 500
 

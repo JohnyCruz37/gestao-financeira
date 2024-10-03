@@ -1,8 +1,22 @@
 import AlertaJs from "./alertaJs.js";
+import { populateSelect } from "./populateEmpresas.js";
 import ValidadorInput from "./validadorInputs.js";
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const form = document.getElementById('notaForm');
     const btnLimpar = document.getElementById('limparFormulario');
+    const tipoAcesso = document.getElementById('tipo-acesso').textContent;
+    const select = document.getElementById('select-empresa');
+    if (tipoAcesso) {
+        if (tipoAcesso.trim() === 'admin') {
+            populateSelect('select-empresa', false);
+        }
+        if (tipoAcesso.trim() === 'Representante') {
+            const idEmpresa = document.getElementById('id_empresa').value;
+            const empresa = await pegarEmpresa(idEmpresa);
+            select.innerHTML += `<option value="${empresa?.id}" selected>${empresa?.razao_social}</option>`;
+            select.disabled = true;
+        }
+    }
     const inputValor = document.getElementById('valor');
     if (inputValor) {
         new ValidadorInput(inputValor);
@@ -14,10 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
             AlertaJs.showAlert('Nenhuma nota fiscal foi selecionada', 'warning');
             return;
         }
+        const idEmpresa = document.getElementById('select-empresa').value;
+        if (!idEmpresa) {
+            AlertaJs.showAlert('Empresa não foi selecionada', 'warning');
+            return;
+        }
         const formData = new FormData();
         formData.append('imagem', imgDaNota.files[0]);
         try {
-            const caminhoImagem = await enviarImagemNota(formData);
+            const caminhoImagem = await enviarImagemNota(formData, idEmpresa);
             const formDataObj = new FormData(this);
             const data = Object.fromEntries(formDataObj.entries());
             const vencicmento = document.getElementById('vencimento').value;
@@ -53,8 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
         form.reset();
     });
 });
-async function enviarImagemNota(formData) {
-    const response = await fetch('/api/conta-a-pagar/imagem-nota-fiscal', {
+async function enviarImagemNota(formData, id_empresa) {
+    const response = await fetch(`/api/conta-a-pagar/imagem-nota-fiscal/${id_empresa}`, {
         method: 'POST',
         body: formData
     });
@@ -77,4 +96,23 @@ async function salvarNota(data) {
         throw new Error(`Erro ao salvar nota: ${response.statusText}`);
     }
     return await response.json();
+}
+async function pegarEmpresa(idEmpresa) {
+    if (!idEmpresa) {
+        AlertaJs.showAlert('ID da empresa não foi informado', 'warning');
+        throw new Error('ID da empresa não foi informado');
+    }
+    try {
+        const response = await fetch(`api/empresas/${idEmpresa}`);
+        if (!response.ok) {
+            AlertaJs.showAlert('Empresa não encontrada', 'warning');
+            throw new Error(`Erro ao buscar empresa: ${response.statusText}`);
+        }
+        return await response.json();
+    }
+    catch (error) {
+        console.error('Erro ao buscar empresa:', error);
+        AlertaJs.showAlert('Falha ao buscar empresa', 'danger');
+        throw error;
+    }
 }
