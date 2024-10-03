@@ -7,3 +7,4 @@ from .gerente import Gerente
 from .financeiro import Financeiro
 from .empresa import Empresa
 from .conta_a_pagar import ContaAPagar
+from .notas_fiscais import NotasFiscais

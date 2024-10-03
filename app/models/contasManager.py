@@ -1,5 +1,6 @@
 from app import db
 from .conta_a_pagar import ContaAPagar
+from .notas_fiscais import NotasFiscais
 class ContasManager:
 
     @classmethod

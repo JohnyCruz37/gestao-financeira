@@ -2,6 +2,7 @@ import os
 from werkzeug.utils import secure_filename
 from flask import current_app
 from app import db
+from app.models.notas_fiscais import NotasFiscais
 class ContaAPagar(db.Model):
     __tablename__ = 'contas_a_pagar'
     id = db.Column(db.Integer, primary_key=True)
@@ -13,7 +14,6 @@ class ContaAPagar(db.Model):
     vencimento = db.Column(db.Date, nullable=False)
     forma_pagamento = db.Column(db.String(50), nullable=False)
     status = db.Column(db.String(20), default='pendente')
-    url_nota_fiscal = db.Column(db.String(200), nullable=False)
     url_comprovante_pagamento = db.Column(db.String(200), nullable=True)
     observacoes = db.Column(db.String(200), nullable=True)
 
@@ -32,7 +32,6 @@ class ContaAPagar(db.Model):
             'vencimento': self.vencimento.strftime('%Y-%m-%d'),
             'forma_pagamento': self.forma_pagamento,
             'status': self.status,
-            'url_nota_fiscal': self.url_nota_fiscal,
         }
 
         if self.url_comprovante_pagamento:
@@ -40,20 +39,14 @@ class ContaAPagar(db.Model):
         if self.observacoes:
             conta_dict['observacoes'] = self.observacoes
 
+        notas = NotasFiscais.query.filter_by(id_conta=self.id).all()
+        notas_fiscais = [{'caminho': nf.caminho_imagem, 'id_conta': nf.id_conta} for nf in notas]
+        conta_dict['url_nota_fiscal'] = notas_fiscais
+
         return conta_dict
 
     def post_image_nota(file, gerente_id, empresa_id):
-        diretorio = os.path.join(current_app.config['UPLOAD_FOLDER'], 'notas_fiscais_uploads', str(empresa_id), str(gerente_id))
-
-        if not os.path.exists(diretorio):
-            os.makedirs(diretorio)
-        
-        filename = secure_filename(file.filename)
-        caminho_completo = os.path.join(diretorio, filename)
-
-        file.save(caminho_completo)
-
-        return os.path.relpath(caminho_completo, current_app.config['UPLOAD_FOLDER'])
+        return NotasFiscais.post_image_nota(file, gerente_id, empresa_id)
 
     def post_image_comprovante(file, financeiro_id):
         diretorio = os.path.join(current_app.config['UPLOAD_FOLDER_COMPROVANTES'], 'comprovantes_pagamentos_uploads', str(financeiro_id))
@@ -69,7 +62,7 @@ class ContaAPagar(db.Model):
 
     @staticmethod
     def add_conta(**kwargs):
-        lista_obrigatorios = ['id_gerente', 'id_empresa', 'numero_nota', 'valor', 'fornecedor', 'vencimento', 'forma_pagamento', 'url_nota_fiscal', ]
+        lista_obrigatorios = ['id_gerente', 'id_empresa', 'numero_nota', 'valor', 'fornecedor', 'vencimento', 'forma_pagamento' ]
         for campo in lista_obrigatorios:
             if campo not in kwargs:
                 raise ValueError(f'O campo {campo} é obrigatório')
@@ -78,6 +71,10 @@ class ContaAPagar(db.Model):
         try:
             db.session.add(nova_conta)
             db.session.commit()
+
+            if 'url_nota_fiscal' in kwargs:
+                NotasFiscais.add_caminhos_imagens(kwargs['url_nota_fiscal'], nova_conta.id)
+
             return True, 'Conta adicionada com sucesso'
         except Exception as e:
             db.session.rollback()

@@ -9,12 +9,20 @@ function populateDetalhesConta(conta, id, tipoAcesso) {
     const contaEntries = Object.entries(conta);
     contaEntries.forEach(([key, value]) => {
         if (typeof value === 'object' && value !== null) {
-            Object.entries(value).forEach(([subKey, subValue]) => {
-                const subElement = document.getElementById(`${subKey}`);
-                if (subElement && subValue !== null) {
-                    subElement.innerHTML = formatValue(subKey, subValue, id);
+            if (Array.isArray(value)) {
+                const element = document.getElementById(`${key}`);
+                if (element) {
+                    element.innerHTML = formatValue(key, value, id);
                 }
-            });
+            }
+            else {
+                Object.entries(value).forEach(([subKey, subValue]) => {
+                    const subElement = document.getElementById(`${subKey}`);
+                    if (subElement && subValue !== null) {
+                        subElement.innerHTML = formatValue(subKey, subValue, id);
+                    }
+                });
+            }
         }
         else {
             const element = document.getElementById(`${key}`);
@@ -27,6 +35,7 @@ function populateDetalhesConta(conta, id, tipoAcesso) {
     tratarSubmissaoForm(tipoAcesso, conta);
 }
 function formatValue(key, value, id) {
+    console.info(key);
     if (key === 'vencimento') {
         return new Date(value).toLocaleDateString('pt-BR');
     }
@@ -34,15 +43,18 @@ function formatValue(key, value, id) {
         return `R$ ${value.toFixed(2)}`;
     }
     if (key === 'url_nota_fiscal') {
+        let lista_urls = '';
+        console.info(value);
         const baseUrl = '/uploads/notas_fiscais_uploads';
-        // Normalizar o caminho: substituir \ por / e remover ..\
-        const normalizedPath = encodeURIComponent(value.replace(/\\/g, '/').replace(/\.\.\//g, ''));
-        return `<a href="${baseUrl}/${normalizedPath}" target="_blank">Visualizar Nota Fiscal</a>`;
+        value.forEach((url) => {
+            const normalizedPath = encodeURIComponent(url['caminho'].replace(/\\/g, '/').replace(/\.\.\//g, ''));
+            lista_urls += `<a href="${baseUrl}/${normalizedPath}" target="_blank">Nota</a>` + '<br>';
+        });
+        return lista_urls;
     }
-    if (key === 'url_comprovante_pagamento' || key === 'url_nota_fiscal') {
+    if (key === 'url_comprovante_pagamento') {
         const baseUrl = '/uploads/comprovantes_pagamentos_uploads';
-        // Substitui todas as barras invertidas por barras normais
-        const normalizedPath = value.replace(/\\/g, '/'); // Corrige barras invertidas
+        const normalizedPath = value.replace(/\\/g, '/');
         return `<a href="${baseUrl}/${normalizedPath}" target="_blank">Visualizar Comprovante</a>`;
     }
     if (key === 'status') {

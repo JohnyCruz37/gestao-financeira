@@ -105,29 +105,33 @@ def get_conta_a_pagar_by_id(id):
 
 @apis.route('/conta-a-pagar/imagem-nota-fiscal/<id_empresa>', methods=['POST'])
 @login_required
-@require_any_access_level('gerente', 'admin')
 def post_imagem_nota_fiscal(id_empresa):
     
     if 'imagem' not in request.files:
         return jsonify({'message': 'Arquivo de nota fiscal não encontrado'}), 400
     
-    file = request.files['imagem']
-
-    if file.filename == '':
-        return jsonify({'message': 'Nome do arquivo vazio'}), 400
-    
+    arquivos = request.files.getlist('imagem')
     gerente_id = current_user.id
+    caminhos_relativos = []
 
     try:
-        caminho_relativo = ContaAPagar.post_image_nota(file, gerente_id, id_empresa)
-    except Exception as e:
-        return jsonify({'message': 'Erro ao salvar o arquivo', 'error': str(e)}), 500
+        for file in arquivos:
+            if file.filename == '':
+                return jsonify({'message': 'Um dos arquivos não tem nome'}), 400
 
-    return jsonify({'caminho': caminho_relativo}), 201
+            caminho_relativo = ContaAPagar.post_image_nota(file, gerente_id, id_empresa)
+            caminhos_relativos.append(caminho_relativo)
+
+
+    except Exception as e:
+        return jsonify({'message': 'Erro ao salvar os arquivos', 'error': str(e)}), 500
+
+    return jsonify({'caminho': caminhos_relativos}), 201
     
 
 @apis.route('/conta-a-pagar/imagem-comprovante-pagamento', methods=['POST'])
 @login_required
+@require_any_access_level('financeiro')
 def post_imagem_comprovante_pagamento():
     if current_user.tipo_acesso != 'financeiro':
         return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403

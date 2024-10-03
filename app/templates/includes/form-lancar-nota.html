@@ -1,4 +1,4 @@
-<form id="notaForm">
+<form id="notaForm" class="mb-5">
     <input type="hidden" name="id_gerente" value={{current_user.id}}>
     <input type="hidden" name="id_empresa" value={{current_user.id_empresa}}>
     <fieldset class="border p-2 mb-2">
@@ -46,7 +46,7 @@
         <div id="forma_pagamentoFeedback" class="invalid-feedback"></div>
     </fieldset>
 
-    <div class="mb-3">
+    <div class="mb-5">
         <button type="submit" class="btn btn-primary">Enviar</button>
         <button type="button" class="btn btn-secondary" id="limparFormulario">Limpar</button>
     </div>

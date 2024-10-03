@@ -23,20 +23,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     form.addEventListener('submit', async function (event) {
         event.preventDefault();
-        const imgDaNota = document.getElementById('notaFiscal');
-        if (!imgDaNota || imgDaNota.files.length === 0) {
-            AlertaJs.showAlert('Nenhuma nota fiscal foi selecionada', 'warning');
-            return;
-        }
         const idEmpresa = document.getElementById('select-empresa').value;
         if (!idEmpresa) {
             AlertaJs.showAlert('Empresa não foi selecionada', 'warning');
             return;
         }
+        const imgDaNota = document.getElementById('notaFiscal');
+        if (!imgDaNota || imgDaNota.files.length === 0) {
+            AlertaJs.showAlert('Nenhuma nota fiscal foi selecionada', 'warning');
+            return;
+        }
         const formData = new FormData();
-        formData.append('imagem', imgDaNota.files[0]);
+        const arquivosNotas = imgDaNota.files;
+        if (arquivosNotas && arquivosNotas.length > 0 && arquivosNotas !== null) {
+            for (let i = 0; i < arquivosNotas.length; i++) {
+                formData.append('imagem', arquivosNotas[i]);
+            }
+        }
         try {
-            const caminhoImagem = await enviarImagemNota(formData, idEmpresa);
+            const caminhosImagens = await enviarImagemNota(formData, idEmpresa);
             const formDataObj = new FormData(this);
             const data = Object.fromEntries(formDataObj.entries());
             const vencicmento = document.getElementById('vencimento').value;
@@ -58,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 AlertaJs.showAlert('Valor não pode ser vazio', 'warning');
                 return;
             }
-            data['url_nota_fiscal'] = caminhoImagem;
+            data['url_nota_fiscal'] = await caminhosImagens;
             await salvarNota(data);
             AlertaJs.showAlert('Nota salva com sucesso!', 'success');
             form.reset();
