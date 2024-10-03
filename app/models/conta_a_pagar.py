@@ -15,6 +15,7 @@ class ContaAPagar(db.Model):
     status = db.Column(db.String(20), default='pendente')
     url_nota_fiscal = db.Column(db.String(200), nullable=False)
     url_comprovante_pagamento = db.Column(db.String(200), nullable=True)
+    observacoes = db.Column(db.String(200), nullable=True)
 
 
     def __repr__(self):
@@ -36,6 +37,8 @@ class ContaAPagar(db.Model):
 
         if self.url_comprovante_pagamento:
             conta_dict['url_comprovante_pagamento'] = self.url_comprovante_pagamento
+        if self.observacoes:
+            conta_dict['observacoes'] = self.observacoes
 
         return conta_dict
 

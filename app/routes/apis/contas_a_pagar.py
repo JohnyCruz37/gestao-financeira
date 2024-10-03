@@ -61,12 +61,17 @@ def get_contas_a_pagar():
 
 @apis.route('/conta-a-pagar/<id>', methods=['PUT'])
 @login_required
+@require_any_access_level('financeiro')
 def update_conta_a_pagar(id):
     if current_user.tipo_acesso != 'gerente':
         data = request.get_json()
         novo_status = data.get('status')
+        obs = data.get('observacao')
         if novo_status == 'pago':
             ContasManager.update_comprovante_pagamento(id, data.get('url_comprovante_pagamento'))
+
+        if obs and obs != '':
+            ContasManager.update_observacao(id, obs)
             
         sucesso, msg = ContasManager.update_status_conta(id, novo_status)
         if sucesso:

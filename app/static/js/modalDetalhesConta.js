@@ -96,18 +96,20 @@ export function actionSubmitButton(className, status, tipoAcesso) {
                 }
                 if (tipoAcesso.trim() === 'financeiro') {
                     const comprovante = await enviarComprovante();
+                    const observacao = pegarObs();
                     if (comprovante) {
-                        atualizarStatus(Number(idConta), status, tipoAcesso, comprovante);
+                        atualizarStatus(Number(idConta), status, tipoAcesso, comprovante, observacao);
                     }
                 }
             }
         });
     });
 }
-export async function atualizarStatus(id, status, tipoAcesso, comprovante = "") {
+export async function atualizarStatus(id, status, tipoAcesso, comprovante = "", observacao = "") {
     let obj_json = {
         status: status,
         url_comprovante_pagamento: comprovante,
+        observacao: observacao
     };
     fetch(`/api/conta-a-pagar/${id}`, {
         method: 'PUT',
@@ -192,4 +194,7 @@ async function enviarComprovante() {
         AlertaJs.showAlert('Por favor, adicione um comprovante para enviar', 'info');
         return '';
     }
+}
+function pegarObs() {
+    return document.getElementById('observacao').value;
 }

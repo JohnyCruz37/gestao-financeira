@@ -80,6 +80,10 @@
                             </div>
                         </td>
                       </tr>
+                      <tr>
+                        <th>Observações</th>
+                        <td id="observacoes"></td>
+                      </tr>
                   </tbody>
               </table>
 
@@ -91,6 +95,20 @@
                             <th>Comprovante</th>
                             <td>
                                 <input type="file" class="form-control" id="input-comprovante" name="comprovante" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Adicionar observação</th>
+                            <td>
+                                <div>
+                                    <div class="form-floating mb-1">
+                                        <textarea placeholder="Observações" class="form-control" 
+                                        id="observacao" name="observacoes" style="height: 100px" required></textarea>
+                                        <label for="observacoes">Observações</label>
+                                    </div>
+                                    <div id="observacoesFeedback" class="invalid-feedback"></div>
+                                </div>
+                                
                             </td>
                         </tr>
                     </tbody>

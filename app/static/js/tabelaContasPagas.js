@@ -10,12 +10,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function apresentarListaContasPagas(tipoAcesso) {
     const lista = await fetchContasPagas();
     const tbody = document.getElementById('tbody-contas-pagas');
-    console.log(tbody);
     if (tbody && tbody !== null) {
         await populateTableContasPagas(lista, tipoAcesso, tbody);
     }
     else {
-        console.error('Elemento tbody não encontrado');
         AlertaJs.showAlert('Recarregue a página para visualizar as contas.', 'warning');
     }
 }
@@ -34,20 +32,15 @@ async function fetchContasPagas() {
     }
 }
 export async function populateTableContasPagas(listacontas, tipoAcesso, tbody) {
-    console.info(`listacontas entrou com o tamanho: ${listacontas.length}`);
     if (!tbody) {
-        console.error('Elemento tbody não encontrado');
         AlertaJs.showAlert('Recarregue a página para visualizar as contas.', 'warning');
         return;
     }
     if (listacontas.length === 0) {
-        console.info(`O valor de listacontas é um array vazio`);
         tbody.innerHTML = '<tr><td colspan="6">Nenhuma conta a pagar encontrada.</td></tr>';
         return;
     }
     else {
-        console.info(`O valor de listacontas não é um array vazio`);
-        console.info(`o valor de listacontas tem ${listacontas.length} elementos`);
         const rows = listacontas.map(conta => {
             return `
                 <tr>

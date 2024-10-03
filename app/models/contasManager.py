@@ -59,3 +59,12 @@ class ContasManager:
             db.session.commit()
             return True
         return False
+
+    @classmethod
+    def update_observacao(cls, conta_id, observacao):
+        conta = ContaAPagar.query.get(conta_id)
+        if conta:
+            conta.observacoes = observacao
+            db.session.commit()
+            return True
+        return False
