@@ -18,6 +18,7 @@ from .contas_a_pagar import post_conta_a_pagar,\
                             post_imagem_nota_fiscal,\
                             get_contas_a_pagar,\
                             update_conta_a_pagar,\
-                            post_imagem_comprovante_pagamento
+                            post_imagem_comprovante_pagamento,\
+                            update_conta_a_pagar_admin
 
 from .contas_pagas import get_contas_pagas

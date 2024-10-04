@@ -1,5 +1,7 @@
 import { apresentarListaContas } from "./tabelaContaAPagar.js";
 import AlertaJs from "./alertaJs.js";
+import { editarConta } from "./editarConta.js";
+import { createEditButton, formatarData } from "./utils.js";
 export default function openModalDetalhesConta(conta, id, tipoAcesso) {
     const modal = new bootstrap.Modal(document.getElementById('modalDetalhesConta'));
     populateDetalhesConta(conta, id, tipoAcesso);
@@ -12,14 +14,14 @@ function populateDetalhesConta(conta, id, tipoAcesso) {
             if (Array.isArray(value)) {
                 const element = document.getElementById(`${key}`);
                 if (element) {
-                    element.innerHTML = formatValue(key, value, id);
+                    element.innerHTML = formatValue(key, value, id, tipoAcesso);
                 }
             }
             else {
                 Object.entries(value).forEach(([subKey, subValue]) => {
                     const subElement = document.getElementById(`${subKey}`);
                     if (subElement && subValue !== null) {
-                        subElement.innerHTML = formatValue(subKey, subValue, id);
+                        subElement.innerHTML = formatValue(subKey, subValue, id, tipoAcesso);
                     }
                 });
             }
@@ -27,24 +29,29 @@ function populateDetalhesConta(conta, id, tipoAcesso) {
         else {
             const element = document.getElementById(`${key}`);
             if (element) {
-                element.innerHTML = formatValue(key, value, id);
+                element.innerHTML = formatValue(key, value, id, tipoAcesso);
             }
         }
     });
     validarFormComprovante(tipoAcesso);
     tratarSubmissaoForm(tipoAcesso, conta);
+    editarConta();
 }
-function formatValue(key, value, id) {
-    console.info(key);
+function formatValue(key, value, id, tipoAcesso) {
     if (key === 'vencimento') {
-        return new Date(value).toLocaleDateString('pt-BR');
+        return formatarData(value) + (tipoAcesso.trim() === 'admin' ? createEditButton(key, id) : '');
     }
     if (key === 'valor') {
-        return `R$ ${value.toFixed(2)}`;
+        return `R$ ${value.toFixed(2)}` + (tipoAcesso.trim() === 'admin' ? createEditButton(key, id) : '');
+    }
+    if (key === 'numero_nota') {
+        return value + (tipoAcesso.trim() === 'admin' ? createEditButton(key, id) : '');
+    }
+    if (key === 'forma_pagamento') {
+        return value + (tipoAcesso.trim() === 'admin' ? createEditButton(key, id) : '');
     }
     if (key === 'url_nota_fiscal') {
         let lista_urls = '';
-        console.info(value);
         const baseUrl = '/uploads/notas_fiscais_uploads';
         value.forEach((url) => {
             const normalizedPath = encodeURIComponent(url['caminho'].replace(/\\/g, '/').replace(/\.\.\//g, ''));

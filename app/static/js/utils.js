@@ -30,3 +30,8 @@ export function verificarVencimento(dataISO) {
     hoje.setHours(0, 0, 0, 0);
     return vencimento <= hoje;
 }
+export function createEditButton(key, id) {
+    return `<button type="button" class="btn btn-warning" data-key="${key}" data-id-conta="${id}">
+                <i class="bi bi-pencil-square"></i>
+            </button>`;
+}

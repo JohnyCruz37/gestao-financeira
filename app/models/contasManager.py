@@ -69,3 +69,13 @@ class ContasManager:
             db.session.commit()
             return True
         return False
+    
+    @classmethod
+    def update_informacoes_conta(cls, **kwargs):
+        conta = ContaAPagar.query.get(kwargs['id'])
+        if conta:
+            for key, value in kwargs.items():
+                setattr(conta, key, value)
+            db.session.commit()
+            return True
+        return False

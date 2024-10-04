@@ -75,6 +75,5 @@ export async function detalhesConta(id, tipoAcesso) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
     const conta = await response.json();
-    console.info(conta);
     openModalDetalhesConta(conta, id, tipoAcesso);
 }

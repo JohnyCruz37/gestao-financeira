@@ -79,7 +79,22 @@ def update_conta_a_pagar(id):
         else:
             return jsonify({'message': msg}), 400
     return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
+
+
+@apis.route('/conta-a-pagar/edicao-admin/<id>', methods=['PUT'])
+@login_required
+def update_conta_a_pagar_admin(id):
+    if current_user.tipo_acesso!= 'admin':
+        return jsonify({'message': 'Você não tem permissão para realizar esta ação'}), 403
     
+    data = request.get_json()
+    data['id'] = id
+    sucesso= ContasManager.update_informacoes_conta(**data)
+    if sucesso:
+        return jsonify({'message': "Salvo com sucesso"}), 200
+    else:
+        return jsonify({'message': "Erro ao salvar"}), 400
+
 
 @apis.route('/conta-a-pagar/<id>', methods=['GET'])
 @login_required
