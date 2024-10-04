@@ -1,6 +1,7 @@
 from app import db
 from .conta_a_pagar import ContaAPagar
 from .notas_fiscais import NotasFiscais
+from app.utils.formatar_vencimento import formatar_data
 class ContasManager:
 
     @classmethod
@@ -75,6 +76,8 @@ class ContasManager:
         conta = ContaAPagar.query.get(kwargs['id'])
         if conta:
             for key, value in kwargs.items():
+                if key == 'vencimento':
+                    value = formatar_data(value)
                 setattr(conta, key, value)
             db.session.commit()
             return True

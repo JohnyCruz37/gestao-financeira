@@ -61,7 +61,7 @@ class ContaAPagar(db.Model):
         return os.path.relpath(caminho_completo, current_app.config['UPLOAD_FOLDER_COMPROVANTES'])
 
     @staticmethod
-    def add_conta(**kwargs):
+    def add_conta(url_nota_fiscal, **kwargs):
         lista_obrigatorios = ['id_gerente', 'id_empresa', 'numero_nota', 'valor', 'fornecedor', 'vencimento', 'forma_pagamento' ]
         for campo in lista_obrigatorios:
             if campo not in kwargs:
@@ -72,8 +72,8 @@ class ContaAPagar(db.Model):
             db.session.add(nova_conta)
             db.session.commit()
 
-            if 'url_nota_fiscal' in kwargs:
-                NotasFiscais.add_caminhos_imagens(kwargs['url_nota_fiscal'], nova_conta.id)
+            if url_nota_fiscal is not None and url_nota_fiscal!= '':
+                NotasFiscais.add_caminhos_imagens(url_nota_fiscal, nova_conta.id)
 
             return True, 'Conta adicionada com sucesso'
         except Exception as e:

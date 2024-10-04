@@ -34,8 +34,10 @@ def post_conta_a_pagar():
         data['id_empresa'] = data['select-empresa']
         del data['select-empresa']
 
+    #passar o dicionario data sem a chave/valor url_nota_fiscal
+    data_sem_url_nota_fiscal = {k: v for k, v in data.items() if k!= 'url_nota_fiscal'}
 
-    sucesso, msg = ContaAPagar.add_conta(**data)
+    sucesso, msg = ContaAPagar.add_conta(data['url_nota_fiscal'], **data_sem_url_nota_fiscal )
     if sucesso:
         return jsonify({'message': msg}), 201
     else:
@@ -61,7 +63,6 @@ def get_contas_a_pagar():
 
 @apis.route('/conta-a-pagar/<id>', methods=['PUT'])
 @login_required
-@require_any_access_level('financeiro')
 def update_conta_a_pagar(id):
     if current_user.tipo_acesso != 'gerente':
         data = request.get_json()
