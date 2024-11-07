@@ -5,6 +5,7 @@ from app.routes.pages import pages
 @pages.route('/pagina-inicial')
 @login_required
 def pagina_inicial():
+
     if current_user.tipo_acesso == 'gerente':
         return redirect(url_for('pages.lancar_conta', id_empresa=current_user.id_empresa))
     return render_template('pages/pagina-inicial.html')

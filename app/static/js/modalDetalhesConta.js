@@ -54,7 +54,7 @@ function formatValue(key, value, id, tipoAcesso) {
         let lista_urls = '';
         const baseUrl = '/uploads/notas_fiscais_uploads';
         value.forEach((url) => {
-            const normalizedPath = encodeURIComponent(url['caminho'].replace(/\\/g, '/').replace(/\.\.\//g, ''));
+            const normalizedPath = url['caminho'].replace(/\\/g, '/').replace(/\.\.\//g, '');
             lista_urls += `<a href="${baseUrl}/${normalizedPath}" target="_blank">Nota</a>` + '<br>';
         });
         return lista_urls;

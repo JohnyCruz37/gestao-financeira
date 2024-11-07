@@ -22,3 +22,5 @@ from .contas_a_pagar import post_conta_a_pagar,\
                             update_conta_a_pagar_admin
 
 from .contas_pagas import get_contas_pagas
+
+from .indicadores import get_indicadores
